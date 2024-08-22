@@ -1,0 +1,532 @@
+#VARIAVEL CAUSABAS_O
+
+#criar pasta para salvar os graficos dessa variavel
+dir.create("variavel_causabaso")
+
+
+
+#--------- SEXO
+
+#BR
+
+# Agrupar dados por sexo e calcular porcentagem
+sexo.br.causabaso <- dados_br_causabaso %>%
+  group_by(ANOOBITO, SEXO) %>%
+  summarise(N.OBITOS = n()) %>%
+  mutate(TOTAL_ANO = sum(N.OBITOS, na.rm = TRUE)) %>%
+  mutate(PERCENTUAL = (N.OBITOS / TOTAL_ANO) * 100) %>%
+  as.data.frame()
+
+
+
+# Plotar gráfico de séries
+series.sexo.br.causabaso <- ggplot(data = sexo.br.causabaso, aes(x = ANOOBITO, y = N.OBITOS, color = SEXO)) +
+  geom_line(linewidth = 0.5, linetype = "solid") +
+  geom_point(shape = 15) +
+  labs(title = "Número de óbitos no Brasil por Sexo - variável CAUSABAS_O",
+       x = "Anos", y = "Óbitos Totais") +
+  theme_classic() +
+  theme(plot.title = element_text(size = 10))
+
+# Exibir o gráfico
+print(series.sexo.br.causabaso)
+
+#salvar grafico
+ggsave(filename = "variavel_causabaso/series_sexo_br_causabaso.png", 
+       plot = series.sexo.br.causabaso, 
+       width = 3.5, height = 2.5, dpi = 150)
+
+
+
+#plotar grafico de proporção de mortes por sexo a cada ano
+proporcao.sexo.br.causabaso <- ggplot(sexo.br.causabaso, aes(x = factor(ANOOBITO), y = PERCENTUAL, fill = SEXO)) +
+  geom_bar(stat = "identity") +
+  labs(x = "Ano", y = "Porcentagem (%)", fill = "Sexo",
+       title = "% de Mortes por Psicoativos no Brasil por Sexo e Ano - Variável CAUSABAS_O") +
+  theme_classic() +
+  theme(plot.title = element_text(size = 10),
+        axis.text = element_text(size = 10))
+
+# Exibir o gráfico
+print(proporcao.sexo.br.causabaso)
+
+# Salvar gráfico
+ggsave(filename = "variavel_causabaso/proporcao_sexo_br_causabaso.png", 
+       plot = proporcao.sexo.br.causabaso,
+       width = 3.5, height = 2.5, dpi = 150)
+
+
+
+#ES
+
+# Agrupar dados por genero e calcular porcentagem
+sexo.es.causabaso <- dados_es_causabaso %>%
+  group_by(ANOOBITO, SEXO) %>%
+  summarise(N.OBITOS = n()) %>%
+  mutate(TOTAL_ANO = sum(N.OBITOS, na.rm = TRUE)) %>%
+  mutate(PERCENTUAL = (N.OBITOS / TOTAL_ANO) * 100) %>%
+  as.data.frame()
+
+
+
+# Plotar gráfico de séries
+series.sexo.es.causabaso <- ggplot(data = sexo.es.causabaso, aes(x = ANOOBITO, y = N.OBITOS, color = SEXO)) +
+  geom_line(linewidth = 0.5, linetype = "solid") +
+  geom_point(shape = 10) +
+  labs(title = "Número de óbitos no ES por Sexo - variável CAUSABAS_O",
+       x = "Anos", y = "Óbitos Totais") +
+  theme_classic() +
+  theme(plot.title = element_text(size = 10))
+
+# Exibir o gráfico
+print(series.sexo.es.causabaso)
+
+#salvar grafico
+ggsave(filename = "variavel_causabaso/series_sexo_es_causabaso.png", 
+       plot = series.sexo.es.causabaso,
+       width = 3.5, height = 2.5, dpi = 150)
+
+
+
+#plotar grafico de proporção de mortes por sexo a cada ano
+proporcao.sexo.es.causabaso <- ggplot(sexo.es.causabaso, aes(x = factor(ANOOBITO), y = PERCENTUAL, fill = SEXO)) +
+  geom_bar(stat = "identity") +
+  labs(x = "Ano", y = "Porcentagem (%)", fill = "Sexo",
+       title = "% de Mortes por Psicoativos no ES por Sexo e Ano - Variável CAUSABAS_O") +
+  theme_classic() +
+  theme(plot.title = element_text(size = 10),
+        axis.text = element_text(size = 10))
+
+# Exibir o gráfico
+print(proporcao.sexo.es.causabaso)
+
+# Salvar gráfico
+ggsave(filename = "variavel_causabaso/proporcao_sexo_es_causabaso.png", 
+       plot = proporcao.sexo.es.causabaso,
+       width = 3.5, height = 2.5, dpi = 150)
+
+
+
+
+
+#------------- RAÇA
+
+#BR
+
+# Agrupar dados por raça e calcular porcentagem
+raca.br.causabaso <- dados_br_causabaso %>%
+  group_by(ANOOBITO, RACACOR) %>%
+  summarise(N.OBITOS = n()) %>%
+  mutate(TOTAL_ANO = sum(N.OBITOS, na.rm = TRUE)) %>%
+  mutate(PERCENTUAL = (N.OBITOS / TOTAL_ANO) * 100) %>%
+  as.data.frame()
+
+
+
+# Plotar gráfico de séries
+series.raca.br.causabaso <- ggplot(data = raca.br.causabaso, aes(x = ANOOBITO, y = N.OBITOS, color = RACACOR)) +
+  geom_line(linewidth = 0.5, linetype = "solid") +
+  geom_point(shape = 15) +
+  labs(title = "Número de óbitos no Brasil por Raça/Cor - variável CAUSABAS_O",
+       x = "Anos", y = "Óbitos Totais") +
+  theme_classic() +
+  theme(plot.title = element_text(size = 10))
+
+# Exibir o gráfico
+print(series.raca.br.causabaso)
+
+#salvar grafico
+ggsave(filename = "variavel_causabaso/series_raca_br_causabaso.png", 
+       plot = series.raca.br.causabaso,
+       width = 3.5, height = 2.5, dpi = 150)
+
+
+
+#plotar grafico de proporção de mortes por raça a cada ano
+proporcao.raca.br.causabaso <- ggplot(raca.br.causabaso, aes(x = factor(ANOOBITO), y = PERCENTUAL, fill = RACACOR)) +
+  geom_bar(stat = "identity") +
+  labs(x = "Ano", y = "Porcentagem (%)", fill = "Raça/Cor",
+       title = "% de Mortes por Psicoativos no Brasil por Raça/Cor e Ano - Variável CAUSABAS_O") +
+  theme_classic() +
+  theme(plot.title = element_text(size = 10),
+        axis.text = element_text(size = 10))
+
+# Exibir o gráfico
+print(proporcao.raca.br.causabaso)
+
+# Salvar gráfico
+ggsave(filename = "variavel_causabaso/proporcao_raca_br_causabaso.png", 
+       plot = proporcao.raca.br.causabaso,
+       width = 3.5, height = 2.5, dpi = 150)
+
+
+
+#ES
+
+# Agrupar dados por raça e calcular porcentagem
+raca.es.causabaso <- dados_es_causabaso %>%
+  group_by(ANOOBITO, RACACOR) %>%
+  summarise(N.OBITOS = n()) %>%
+  mutate(TOTAL_ANO = sum(N.OBITOS, na.rm = TRUE)) %>%
+  mutate(PERCENTUAL = (N.OBITOS / TOTAL_ANO) * 100) %>%
+  as.data.frame()
+
+
+
+# Plotar gráfico de séries
+series.raca.es.causabaso <- ggplot(data = raca.es.causabaso, aes(x = ANOOBITO, y = N.OBITOS, color = RACACOR)) +
+  geom_line(linewidth = 0.5, linetype = "solid") +
+  geom_point(shape = 15) +
+  labs(title = "Número de óbitos no ES por Raça/Cor - variável CAUSABAS_O",
+       x = "Anos", y = "Óbitos Totais") +
+  theme_classic() +
+  theme(plot.title = element_text(size = 10))
+
+# Exibir o gráfico
+print(series.raca.es.causabaso)
+
+#salvar grafico
+ggsave(filename = "variavel_causabaso/series_raca_es_causabaso.png", 
+       plot = series.raca.es.causabaso,
+       width = 3.5, height = 2.5, dpi = 150)
+
+
+
+#plotar grafico de proporção de mortes por raça a cada ano
+proporcao.raca.es.causabaso <- ggplot(raca.es.causabaso, aes(x = factor(ANOOBITO), y = PERCENTUAL, fill = RACACOR)) +
+  geom_bar(stat = "identity") +
+  labs(x = "Ano", y = "Porcentagem (%)", fill = "Raça/Cor",
+       title = "% de Mortes por Psicoativos no ES por Raça/Cor e Ano - Variável CAUSABAS_O") +
+  theme_classic() +
+  theme(plot.title = element_text(size = 13),
+        axis.text = element_text(size = 10))
+
+# Exibir o gráfico
+print(proporcao.raca.es.causabaso)
+
+# Salvar gráfico
+ggsave(filename = "variavel_causabaso/proporcao_raca_es_causabaso.png", 
+       plot = proporcao.raca.es.causabaso,
+       width = 3.5, height = 2.5, dpi = 150)
+
+
+
+
+
+#---------- ESCOLARIDADE
+
+#BR
+
+# Agrupar dados por escolaridade e calcular porcentagem
+esc.br.causabaso <- dados_br_causabaso %>%
+  group_by(ANOOBITO, ESC) %>%
+  summarise(N.OBITOS = n()) %>%
+  mutate(TOTAL_ANO = sum(N.OBITOS, na.rm = TRUE)) %>%
+  mutate(PERCENTUAL = (N.OBITOS / TOTAL_ANO) * 100) %>%
+  as.data.frame()
+
+
+
+# Plotar gráfico de séries
+series.esc.br.causabaso <- ggplot(data = esc.br.causabaso, aes(x = ANOOBITO, y = N.OBITOS, color = ESC)) +
+  geom_line(linewidth = 0.5, linetype = "solid") +
+  geom_point(shape = 15) +
+  labs(title = "Número de óbitos no Brasil por Escolaridade - variável CAUSABAS_O",
+       x = "Anos", y = "Óbitos Totais") +
+  theme_classic() +
+  theme(plot.title = element_text(size = 10))
+
+# Exibir o gráfico
+print(series.esc.br.causabaso)
+
+#salvar grafico
+ggsave(filename = "variavel_causabaso/series_esc_br_causabaso.png", 
+       plot = series.esc.br.causabaso,
+       width = 3.5, height = 2.5, dpi = 150)
+
+
+
+#plotar grafico de proporção de mortes por escolaridade a cada ano
+proporcao.esc.br.causabaso <- ggplot(esc.br.causabaso, aes(x = factor(ANOOBITO), y = PERCENTUAL, fill = ESC)) +
+  geom_bar(stat = "identity") + 
+  labs(x = "Ano", y = "Porcentagem (%)", fill = "Escolaridade",
+       title = "% de Mortes por Psicoativos no Brasil por Escolaridade e Ano - Variável CAUSABAS_O") +
+  theme_classic() +
+  theme(plot.title = element_text(size = 10),
+        axis.text = element_text(size = 10))
+
+# Exibir o gráfico
+print(proporcao.esc.br.causabaso)
+
+# Salvar gráfico
+ggsave(filename = "variavel_causabaso/proporcao_esc_br_causabaso.png", 
+       plot = proporcao.esc.br.causabaso,
+       width = 3.5, height = 2.5, dpi = 150)
+
+
+
+#ES
+
+# Agrupar dados por escolaridade e calcular porcentagem
+esc.es.causabaso <- dados_es_causabaso %>%
+  group_by(ANOOBITO, ESC) %>%
+  summarise(N.OBITOS = n()) %>%
+  mutate(TOTAL_ANO = sum(N.OBITOS, na.rm = TRUE)) %>%
+  mutate(PERCENTUAL = (N.OBITOS / TOTAL_ANO) * 100) %>%
+  as.data.frame()
+
+
+
+# Plotar gráfico de séries
+series.esc.es.causabaso <- ggplot(data = esc.es.causabaso, aes(x = ANOOBITO, y = N.OBITOS, color = ESC)) +
+  geom_line(linewidth = 0.5, linetype = "solid") +
+  geom_point(shape = 15) +
+  labs(title = "Número de óbitos no ES por Escolaridade - variável CAUSABAS_O",
+       x = "Anos", y = "Óbitos Totais") +
+  theme_classic() +
+  theme(plot.title = element_text(size = 10))
+
+# Exibir o gráfico
+print(series.esc.es.causabaso)
+
+#salvar grafico
+ggsave(filename = "variavel_causabaso/series_esc_es_causabaso.png", 
+       plot = series.esc.es.causabaso,
+       width = 3.5, height = 2.5, dpi = 150)
+
+
+#plotar grafico de proporção de mortes por escolaridade a cada ano
+proporcao.esc.es.causabaso <- ggplot(esc.es.causabaso, aes(x = factor(ANOOBITO), y = PERCENTUAL, fill = ESC)) +
+  geom_bar(stat = "identity") +
+  labs(x = "Ano", y = "Porcentagem (%)", fill = "Escolaridade",
+       title = "% de Mortes por Psicoativos no ES por Escolaridade e Ano - Variável CAUSABAS_O") +
+  theme_classic() +
+  theme(plot.title = element_text(size = 10),
+        axis.text = element_text(size = 10))
+
+# Exibir o gráfico
+print(proporcao.esc.es.causabaso)
+
+# Salvar gráfico
+ggsave(filename = "variavel_causabaso/proporcao_esc_es_causabaso.png", 
+       plot = proporcao.esc.es.causabaso,
+       width = 3.5, height = 2.5, dpi = 150)
+
+
+
+
+
+#ESTADO CIVIL
+
+#BR
+
+# Agrupar dados por estado civil e calcular porcentagem
+estciv.br.causabaso <- dados_br_causabaso %>%
+  group_by(ANOOBITO, ESTCIV) %>%
+  summarise(N.OBITOS = n()) %>%
+  mutate(TOTAL_ANO = sum(N.OBITOS, na.rm = TRUE)) %>%
+  mutate(PERCENTUAL = (N.OBITOS / TOTAL_ANO) * 100) %>%
+  as.data.frame()
+
+
+
+# Plotar gráfico de séries
+series.estciv.br.causabaso <- ggplot(data = estciv.br.causabaso, aes(x = ANOOBITO, y = N.OBITOS, color = ESTCIV)) +
+  geom_line(linewidth = 0.5, linetype = "solid") +
+  geom_point(shape = 15) +
+  labs(title = "Número de óbitos no Brasil por Estado Civil - variável CAUSABAS_O",
+       x = "Anos", y = "Óbitos Totais") +
+  theme_classic() +
+  theme(plot.title = element_text(size = 10))
+
+# Exibir o gráfico
+print(series.estciv.br.causabaso)
+
+#salvar grafico
+ggsave(filename = "variavel_causabaso/series_estciv_br_causabaso.png", 
+       plot = series.estciv.br.causabaso, 
+       width = 3.5, height = 2.5, dpi = 150)
+
+
+#plotar grafico de proporção de mortes por sexo a cada ano
+proporcao.estciv.br.causabaso <- ggplot(estciv.br.causabaso, aes(x = factor(ANOOBITO), y = PERCENTUAL, fill = ESTCIV)) +
+  geom_bar(stat = "identity") +
+  labs(x = "Ano", y = "Porcentagem (%)", fill = "Estado Civil",
+       title = "% de Mortes por Psicoativos no Brasil por Estado Civil e Ano - Variável CAUSABAS_O") +
+  theme_classic() +
+  theme(plot.title = element_text(size = 10),
+        axis.text = element_text(size = 10))
+
+# Exibir o gráfico
+print(proporcao.estciv.br.causabaso)
+
+# Salvar gráfico
+ggsave(filename = "variavel_causabaso/proporcao_estciv_br_causabaso.png", 
+       plot = proporcao.estciv.br.causabaso,
+       width = 3.5, height = 2.5, dpi = 150)
+
+
+
+#ES
+
+# Agrupar dados por estado civil e calcular porcentagem
+estciv.es.causabaso <- dados_es_causabaso %>%
+  group_by(ANOOBITO, ESTCIV) %>%
+  summarise(N.OBITOS = n()) %>%
+  mutate(TOTAL_ANO = sum(N.OBITOS, na.rm = TRUE)) %>%
+  mutate(PERCENTUAL = (N.OBITOS / TOTAL_ANO) * 100) %>%
+  as.data.frame()
+
+
+
+# Plotar gráfico de séries
+series.estciv.es.causabaso <- ggplot(data = estciv.es.causabaso, aes(x = ANOOBITO, y = N.OBITOS, color = ESTCIV)) +
+  geom_line(linewidth = 0.5, linetype = "solid") +
+  geom_point(shape = 15) +
+  labs(title = "Número de óbitos no ES por Estado Civil - variável CAUSABAS_O",
+       x = "Anos", y = "Óbitos Totais") +
+  theme_classic() +
+  theme(plot.title = element_text(size = 10))
+
+# Exibir o gráfico
+print(series.estciv.es.causabaso)
+
+#salvar grafico
+ggsave(filename = "variavel_causabaso/series_estciv_es_causabaso.png", 
+       plot = series.estciv.es.causabaso,
+       width = 3.5, height = 2.5, dpi = 150)
+
+
+
+#plotar grafico de proporção de mortes por estciv a cada ano
+proporcao.estciv.es.causabaso <- ggplot(estciv.es.causabaso, aes(x = factor(ANOOBITO), y = PERCENTUAL, fill = ESTCIV)) +
+  geom_bar(stat = "identity") +
+  labs(x = "Ano", y = "Porcentagem (%)", fill = "Estado Civil",
+       title = "% de Mortes por Psicoativos no ES por Estado Civil e Ano - Variável CAUSABAS_O") +
+  theme_classic() +
+  theme(plot.title = element_text(size = 10),
+        axis.text = element_text(size = 10))
+
+# Exibir o gráfico
+print(proporcao.estciv.es.causabaso)
+
+# Salvar gráfico
+ggsave(filename = "variavel_causabaso/proporcao_estciv_es_causabaso.png", 
+       plot = proporcao.estciv.es.causabaso,
+       width = 3.5, height = 2.5, dpi = 150)
+
+
+
+
+
+
+#FAIXA ETARIA
+
+#BR
+
+#montar coluna de faixa etaria
+dados_br_causabaso$FAIXAETA <- cut(dados_br_causabaso$IDADE2,
+                                  breaks = c(-Inf, 12, 17, 30, 60, Inf),
+                                  labels = c("0-12 anos", "13-17 anos", "18-30 anos", "31-60 anos", "60+ anos"),
+                                  right = TRUE) #inclusivo a direita (x-y]
+
+#agrupar por faixa etaria
+faixaeta.br.causabaso <- dados_br_causabaso %>%
+  group_by(ANOOBITO, FAIXAETA) %>%
+  summarise(N.OBITOS = n()) %>%
+  ungroup() %>%
+  group_by(ANOOBITO) %>%
+  mutate(TOTAL_ANO = sum(N.OBITOS)) %>%
+  mutate(PERCENTUAL = (N.OBITOS / TOTAL_ANO) * 100) %>%
+  as.data.frame()
+
+
+# Plotar gráfico de séries
+series.faixaeta.br.causabaso <- ggplot(data = faixaeta.br.causabaso, aes(x = ANOOBITO, y = N.OBITOS, color = FAIXAETA)) +
+  geom_line(linewidth = 0.5, linetype = "solid") +
+  geom_point(shape = 15) +
+  labs(title = "Número de óbitos no Brasil por Faixa Etária - variável CAUSABAS_O",
+       x = "Anos", y = "Óbitos Totais") +
+  theme_classic() +
+  theme(plot.title = element_text(size = 10))
+
+# Exibir o gráfico
+print(series.faixaeta.br.causabaso)
+
+#salvar grafico
+ggsave(filename = "variavel_causabaso/series_faixaeta_br_causabaso.png", 
+       plot = series.faixaeta.br.causabaso,
+       width = 3.5, height = 2.5, dpi = 150)
+
+#plotar grafico de proporção de mortes por faixa etaria a cada ano
+proporcao.faixaeta.br.causabaso <- ggplot(faixaeta.br.causabaso, aes(x = factor(ANOOBITO), y = PERCENTUAL, fill = FAIXAETA)) +
+  geom_bar(stat = "identity") +
+  labs(x = "Ano", y = "Porcentagem (%)", fill = "Faixa Etária",
+       title = "% de Mortes por Psicoativos no Brasil por Faixa Etária e Ano - Variável CAUSABAS_O") +
+  theme_classic() +
+  theme(plot.title = element_text(size = 10),
+        axis.text = element_text(size = 10))
+
+# Exibir o gráfico
+print(proporcao.faixaeta.br.causabaso)
+
+# Salvar gráfico
+ggsave(filename = "variavel_causabaso/proporcao_faixaeta_br_causabaso.png", 
+       plot = proporcao.faixaeta.br.causabaso,
+       width = 3.5, height = 2.5, dpi = 150)
+
+
+
+#ES
+
+#montar coluna de faixa etaria
+dados_es_causabaso$FAIXAETA <- cut(dados_es_causabaso$IDADE2,
+                                  breaks = c(-Inf, 12, 17, 30, 60, Inf),
+                                  labels = c("0-12 anos", "13-17 anos", "18-30 anos", "31-60 anos", "60+ anos"),
+                                  right = TRUE) #inclusivo a direita (x-y]
+
+#agrupar por faixa etaria
+faixaeta.es.causabaso <- dados_es_causabaso %>%
+  group_by(ANOOBITO, FAIXAETA) %>%
+  summarise(N.OBITOS = n()) %>%
+  ungroup() %>%
+  group_by(ANOOBITO) %>%
+  mutate(TOTAL_ANO = sum(N.OBITOS)) %>%
+  mutate(PERCENTUAL = (N.OBITOS / TOTAL_ANO) * 100) %>%
+  as.data.frame()
+
+
+# Plotar gráfico de séries
+series.faixaeta.es.causabaso <- ggplot(data = faixaeta.es.causabaso, aes(x = ANOOBITO, y = N.OBITOS, color = FAIXAETA)) +
+  geom_line(linewidth = 0.5, linetype = "solid") +
+  geom_point(shape = 15) +
+  labs(title = "Número de óbitos no ES por Faixa Etária - variável CAUSABAS_O",
+       x = "Anos", y = "Óbitos Totais") +
+  theme_classic() +
+  theme(plot.title = element_text(size = 10))
+
+# Exibir o gráfico
+print(series.faixaeta.es.causabaso)
+
+#salvar grafico
+ggsave(filename = "variavel_causabaso/series_faixaeta_es_causabaso.png", 
+       plot = series.faixaeta.es.causabaso,
+       width = 3.5, height = 2.5, dpi = 150)
+
+#plotar grafico de proporção de mortes por faixa etaria a cada ano
+proporcao.faixaeta.es.causabaso <- ggplot(faixaeta.es.causabaso, aes(x = factor(ANOOBITO), y = PERCENTUAL, fill = FAIXAETA)) +
+  geom_bar(stat = "identity") +
+  labs(x = "Ano", y = "Porcentagem (%)", fill = "Faixa Etária",
+       title = "% de Mortes por Psicoativos no ES por Faixa Etária e Ano - Variável CAUSABAS_O") +
+  theme_classic() +
+  theme(plot.title = element_text(size = 10),
+        axis.text = element_text(size = 10))
+
+# Exibir o gráfico
+print(proporcao.faixaeta.es.causabaso)
+
+# Salvar gráfico
+ggsave(filename = "variavel_causabaso/proporcao_faixaeta_es_causabaso.png", 
+       plot = proporcao.faixaeta.es.causabaso,
+       width = 3.5, height = 2.5, dpi = 150)
+

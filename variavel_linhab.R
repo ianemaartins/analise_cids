@@ -1,0 +1,532 @@
+#VARIAVEL LINHAB
+
+#criar pasta para salvar os graficos dessa variavel
+dir.create("variavel_linhab")
+
+
+
+#--------- SEXO
+
+#BR
+
+# Agrupar dados por sexo e calcular porcentagem
+sexo.br.linhab <- dados_br_linhab %>%
+  group_by(ANOOBITO, SEXO) %>%
+  summarise(N.OBITOS = n()) %>%
+  mutate(TOTAL_ANO = sum(N.OBITOS, na.rm = TRUE)) %>%
+  mutate(PERCENTUAL = (N.OBITOS / TOTAL_ANO) * 100) %>%
+  as.data.frame()
+
+
+
+# Plotar gráfico de séries
+series.sexo.br.linhab <- ggplot(data = sexo.br.linhab, aes(x = ANOOBITO, y = N.OBITOS, color = SEXO)) +
+  geom_line(linewidth = 0.5, linetype = "solid") +
+  geom_point(shape = 15) +
+  labs(title = "Número de óbitos no Brasil por Sexo - variável LINHAB",
+       x = "Anos", y = "Óbitos Totais") +
+  theme_classic() +
+  theme(plot.title = element_text(size = 10))
+
+# Exibir o gráfico
+print(series.sexo.br.linhab)
+
+#salvar grafico
+ggsave(filename = "variavel_linhab/series_sexo_br_linhab.png", 
+       plot = series.estciv.br.linhab, 
+       width = 3.5, height = 2.5, dpi = 150)
+
+
+
+#plotar grafico de proporção de mortes por sexo a cada ano
+proporcao.sexo.br.linhab <- ggplot(sexo.br.linhab, aes(x = factor(ANOOBITO), y = PERCENTUAL, fill = SEXO)) +
+  geom_bar(stat = "identity") +
+  labs(x = "Ano", y = "Porcentagem (%)", fill = "Sexo",
+       title = "% de Mortes por Psicoativos no Brasil por Sexo e Ano - Variável LINHAB") +
+  theme_classic() +
+  theme(plot.title = element_text(size = 10),
+        axis.text = element_text(size = 10))
+
+# Exibir o gráfico
+print(proporcao.sexo.br.linhab)
+
+# Salvar gráfico
+ggsave(filename = "variavel_linhab/proporcao_sexo_br_linhab.png", 
+       plot = proporcao.sexo.br.linhab,
+       width = 3.5, height = 2.5, dpi = 150)
+
+
+
+#ES
+
+# Agrupar dados por genero e calcular porcentagem
+sexo.es.linhab <- dados_es_linhab %>%
+  group_by(ANOOBITO, SEXO) %>%
+  summarise(N.OBITOS = n()) %>%
+  mutate(TOTAL_ANO = sum(N.OBITOS, na.rm = TRUE)) %>%
+  mutate(PERCENTUAL = (N.OBITOS / TOTAL_ANO) * 100) %>%
+  as.data.frame()
+
+
+
+# Plotar gráfico de séries
+series.sexo.es.linhab <- ggplot(data = sexo.es.linhab, aes(x = ANOOBITO, y = N.OBITOS, color = SEXO)) +
+  geom_line(linewidth = 0.5, linetype = "solid") +
+  geom_point(shape = 10) +
+  labs(title = "Número de óbitos no ES por Sexo - variável LINHAB",
+       x = "Anos", y = "Óbitos Totais") +
+  theme_classic() +
+  theme(plot.title = element_text(size = 10))
+
+# Exibir o gráfico
+print(series.sexo.es.linhab)
+
+#salvar grafico
+ggsave(filename = "variavel_linhab/series_sexo_es_linhab.png", 
+       plot = series.estciv.es.linhab,
+       width = 3.5, height = 2.5, dpi = 150)
+
+
+
+#plotar grafico de proporção de mortes por sexo a cada ano
+proporcao.sexo.es.linhab <- ggplot(sexo.es.linhab, aes(x = factor(ANOOBITO), y = PERCENTUAL, fill = SEXO)) +
+  geom_bar(stat = "identity") +
+  labs(x = "Ano", y = "Porcentagem (%)", fill = "Sexo",
+       title = "% de Mortes por Psicoativos no ES por Sexo e Ano - Variável LINHAB") +
+  theme_classic() +
+  theme(plot.title = element_text(size = 10),
+        axis.text = element_text(size = 10))
+
+# Exibir o gráfico
+print(proporcao.sexo.es.linhab)
+
+# Salvar gráfico
+ggsave(filename = "variavel_linhab/proporcao_sexo_es_linhab.png", 
+       plot = proporcao.sexo.es.linhab,
+       width = 3.5, height = 2.5, dpi = 150)
+
+
+
+
+
+#------------- RAÇA
+
+#BR
+
+# Agrupar dados por raça e calcular porcentagem
+raca.br.linhab <- dados_br_linhab %>%
+  group_by(ANOOBITO, RACACOR) %>%
+  summarise(N.OBITOS = n()) %>%
+  mutate(TOTAL_ANO = sum(N.OBITOS, na.rm = TRUE)) %>%
+  mutate(PERCENTUAL = (N.OBITOS / TOTAL_ANO) * 100) %>%
+  as.data.frame()
+
+
+
+# Plotar gráfico de séries
+series.raca.br.linhab <- ggplot(data = raca.br.linhab, aes(x = ANOOBITO, y = N.OBITOS, color = RACACOR)) +
+  geom_line(linewidth = 0.5, linetype = "solid") +
+  geom_point(shape = 15) +
+  labs(title = "Número de óbitos no Brasil por Raça/Cor - variável LINHAB",
+       x = "Anos", y = "Óbitos Totais") +
+  theme_classic() +
+  theme(plot.title = element_text(size = 10))
+
+# Exibir o gráfico
+print(series.raca.br.linhab)
+
+#salvar grafico
+ggsave(filename = "variavel_linhab/series_raca_br_linhab.png", 
+       plot = series.raca.br.linhab,
+       width = 3.5, height = 2.5, dpi = 150)
+
+
+
+#plotar grafico de proporção de mortes por raça a cada ano
+proporcao.raca.br.linhab <- ggplot(raca.br.linhab, aes(x = factor(ANOOBITO), y = PERCENTUAL, fill = RACACOR)) +
+  geom_bar(stat = "identity") +
+  labs(x = "Ano", y = "Porcentagem (%)", fill = "Raça/Cor",
+       title = "% de Mortes por Psicoativos no Brasil por Raça/Cor e Ano - Variável LINHAB") +
+  theme_classic() +
+  theme(plot.title = element_text(size = 10),
+        axis.text = element_text(size = 10))
+
+# Exibir o gráfico
+print(proporcao.raca.br.linhab)
+
+# Salvar gráfico
+ggsave(filename = "variavel_linhab/proporcao_raca_br_linhab.png", 
+       plot = proporcao.raca.br.linhab,
+       width = 3.5, height = 2.5, dpi = 150)
+
+
+
+#ES
+
+# Agrupar dados por raça e calcular porcentagem
+raca.es.linhab <- dados_es_linhab %>%
+  group_by(ANOOBITO, RACACOR) %>%
+  summarise(N.OBITOS = n()) %>%
+  mutate(TOTAL_ANO = sum(N.OBITOS, na.rm = TRUE)) %>%
+  mutate(PERCENTUAL = (N.OBITOS / TOTAL_ANO) * 100) %>%
+  as.data.frame()
+
+
+
+# Plotar gráfico de séries
+series.raca.es.linhab <- ggplot(data = raca.es.linhab, aes(x = ANOOBITO, y = N.OBITOS, color = RACACOR)) +
+  geom_line(linewidth = 0.5, linetype = "solid") +
+  geom_point(shape = 15) +
+  labs(title = "Número de óbitos no ES por Raça/Cor - variável LINHAB",
+       x = "Anos", y = "Óbitos Totais") +
+  theme_classic() +
+  theme(plot.title = element_text(size = 10))
+
+# Exibir o gráfico
+print(series.raca.es.linhab)
+
+#salvar grafico
+ggsave(filename = "variavel_linhab/series_raca_es_linhab.png", 
+       plot = series.raca.es.linhab,
+       width = 3.5, height = 2.5, dpi = 150)
+
+
+
+#plotar grafico de proporção de mortes por raça a cada ano
+proporcao.raca.es.linhab <- ggplot(raca.es.linhab, aes(x = factor(ANOOBITO), y = PERCENTUAL, fill = RACACOR)) +
+  geom_bar(stat = "identity") +
+  labs(x = "Ano", y = "Porcentagem (%)", fill = "Raça/Cor",
+       title = "% de Mortes por Psicoativos no ES por Raça/Cor e Ano - Variável LINHAB") +
+  theme_classic() +
+  theme(plot.title = element_text(size = 13),
+        axis.text = element_text(size = 10))
+
+# Exibir o gráfico
+print(proporcao.raca.es.linhab)
+
+# Salvar gráfico
+ggsave(filename = "variavel_linhab/proporcao_raca_es_linhab.png", 
+       plot = proporcao.raca.es.linhab,
+       width = 3.5, height = 2.5, dpi = 150)
+
+
+
+
+
+#---------- ESCOLARIDADE
+
+#BR
+
+# Agrupar dados por escolaridade e calcular porcentagem
+esc.br.linhab <- dados_br_linhab %>%
+  group_by(ANOOBITO, ESC) %>%
+  summarise(N.OBITOS = n()) %>%
+  mutate(TOTAL_ANO = sum(N.OBITOS, na.rm = TRUE)) %>%
+  mutate(PERCENTUAL = (N.OBITOS / TOTAL_ANO) * 100) %>%
+  as.data.frame()
+
+
+
+# Plotar gráfico de séries
+series.esc.br.linhab <- ggplot(data = esc.br.linhab, aes(x = ANOOBITO, y = N.OBITOS, color = ESC)) +
+  geom_line(linewidth = 0.5, linetype = "solid") +
+  geom_point(shape = 15) +
+  labs(title = "Número de óbitos no Brasil por Escolaridade - variável LINHAB",
+       x = "Anos", y = "Óbitos Totais") +
+  theme_classic() +
+  theme(plot.title = element_text(size = 10))
+
+# Exibir o gráfico
+print(series.esc.br.linhab)
+
+#salvar grafico
+ggsave(filename = "variavel_linhab/series_esc_br_linhab.png", 
+       plot = series.esc.br.linhab,
+       width = 3.5, height = 2.5, dpi = 150)
+
+
+
+#plotar grafico de proporção de mortes por escolaridade a cada ano
+proporcao.esc.br.linhab <- ggplot(esc.br.linhab, aes(x = factor(ANOOBITO), y = PERCENTUAL, fill = ESC)) +
+  geom_bar(stat = "identity") + 
+  labs(x = "Ano", y = "Porcentagem (%)", fill = "Escolaridade",
+       title = "% de Mortes por Psicoativos no Brasil por Escolaridade e Ano - Variável LINHAB") +
+  theme_classic() +
+  theme(plot.title = element_text(size = 10),
+        axis.text = element_text(size = 10))
+
+# Exibir o gráfico
+print(proporcao.esc.br.linhab)
+
+# Salvar gráfico
+ggsave(filename = "variavel_linhab/proporcao_esc_br_linhab.png", 
+       plot = proporcao.esc.br.linhab,
+       width = 3.5, height = 2.5, dpi = 150)
+
+
+
+#ES
+
+# Agrupar dados por escolaridade e calcular porcentagem
+esc.es.linhab <- dados_es_linhab %>%
+  group_by(ANOOBITO, ESC) %>%
+  summarise(N.OBITOS = n()) %>%
+  mutate(TOTAL_ANO = sum(N.OBITOS, na.rm = TRUE)) %>%
+  mutate(PERCENTUAL = (N.OBITOS / TOTAL_ANO) * 100) %>%
+  as.data.frame()
+
+
+
+# Plotar gráfico de séries
+series.esc.es.linhab <- ggplot(data = esc.es.linhab, aes(x = ANOOBITO, y = N.OBITOS, color = ESC)) +
+  geom_line(linewidth = 0.5, linetype = "solid") +
+  geom_point(shape = 15) +
+  labs(title = "Número de óbitos no ES por Escolaridade - variável LINHAB",
+       x = "Anos", y = "Óbitos Totais") +
+  theme_classic() +
+  theme(plot.title = element_text(size = 10))
+
+# Exibir o gráfico
+print(series.esc.es.linhab)
+
+#salvar grafico
+ggsave(filename = "variavel_linhab/series_esc_es_linhab.png", 
+       plot = series.esc.es.linhab,
+       width = 3.5, height = 2.5, dpi = 150)
+
+
+#plotar grafico de proporção de mortes por escolaridade a cada ano
+proporcao.esc.es.linhab <- ggplot(esc.es.linhab, aes(x = factor(ANOOBITO), y = PERCENTUAL, fill = ESC)) +
+  geom_bar(stat = "identity") +
+  labs(x = "Ano", y = "Porcentagem (%)", fill = "Escolaridade",
+       title = "% de Mortes por Psicoativos no ES por Escolaridade e Ano - Variável LINHAB") +
+  theme_classic() +
+  theme(plot.title = element_text(size = 10),
+        axis.text = element_text(size = 10))
+
+# Exibir o gráfico
+print(proporcao.esc.es.linhab)
+
+# Salvar gráfico
+ggsave(filename = "variavel_linhab/proporcao_esc_es_linhab.png", 
+       plot = proporcao.esc.es.linhab,
+       width = 3.5, height = 2.5, dpi = 150)
+
+
+
+
+
+#ESTADO CIVIL
+
+#BR
+
+# Agrupar dados por estado civil e calcular porcentagem
+estciv.br.linhab <- dados_br_linhab %>%
+  group_by(ANOOBITO, ESTCIV) %>%
+  summarise(N.OBITOS = n()) %>%
+  mutate(TOTAL_ANO = sum(N.OBITOS, na.rm = TRUE)) %>%
+  mutate(PERCENTUAL = (N.OBITOS / TOTAL_ANO) * 100) %>%
+  as.data.frame()
+
+
+
+# Plotar gráfico de séries
+series.estciv.br.linhab <- ggplot(data = estciv.br.linhab, aes(x = ANOOBITO, y = N.OBITOS, color = ESTCIV)) +
+  geom_line(linewidth = 0.5, linetype = "solid") +
+  geom_point(shape = 15) +
+  labs(title = "Número de óbitos no Brasil por Estado Civil - variável LINHAB",
+       x = "Anos", y = "Óbitos Totais") +
+  theme_classic() +
+  theme(plot.title = element_text(size = 10))
+
+# Exibir o gráfico
+print(series.estciv.br.linhab)
+
+#salvar grafico
+ggsave(filename = "variavel_linhab/series_estciv_br_linhab.png", 
+       plot = series.estciv.br.linhab, 
+       width = 3.5, height = 2.5, dpi = 150)
+
+
+#plotar grafico de proporção de mortes por sexo a cada ano
+proporcao.estciv.br.linhab <- ggplot(estciv.br.linhab, aes(x = factor(ANOOBITO), y = PERCENTUAL, fill = ESTCIV)) +
+  geom_bar(stat = "identity") +
+  labs(x = "Ano", y = "Porcentagem (%)", fill = "Estado Civil",
+       title = "% de Mortes por Psicoativos no Brasil por Estado Civil e Ano - Variável LINHAB") +
+  theme_classic() +
+  theme(plot.title = element_text(size = 10),
+        axis.text = element_text(size = 10))
+
+# Exibir o gráfico
+print(proporcao.estciv.br.linhab)
+
+# Salvar gráfico
+ggsave(filename = "variavel_linhab/proporcao_estciv_br_linhab.png", 
+       plot = proporcao.estciv.br.linhab,
+       width = 3.5, height = 2.5, dpi = 150)
+
+
+
+#ES
+
+# Agrupar dados por estado civil e calcular porcentagem
+estciv.es.linhab <- dados_es_linhab %>%
+  group_by(ANOOBITO, ESTCIV) %>%
+  summarise(N.OBITOS = n()) %>%
+  mutate(TOTAL_ANO = sum(N.OBITOS, na.rm = TRUE)) %>%
+  mutate(PERCENTUAL = (N.OBITOS / TOTAL_ANO) * 100) %>%
+  as.data.frame()
+
+
+
+# Plotar gráfico de séries
+series.estciv.es.linhab <- ggplot(data = estciv.es.linhab, aes(x = ANOOBITO, y = N.OBITOS, color = ESTCIV)) +
+  geom_line(linewidth = 0.5, linetype = "solid") +
+  geom_point(shape = 15) +
+  labs(title = "Número de óbitos no ES por Estado Civil - variável LINHAB",
+       x = "Anos", y = "Óbitos Totais") +
+  theme_classic() +
+  theme(plot.title = element_text(size = 10))
+
+# Exibir o gráfico
+print(series.estciv.es.linhab)
+
+#salvar grafico
+ggsave(filename = "variavel_linhab/series_estciv_es_linhab.png", 
+       plot = series.estciv.es.linhab,
+       width = 3.5, height = 2.5, dpi = 150)
+
+
+
+#plotar grafico de proporção de mortes por estciv a cada ano
+proporcao.estciv.es.linhab <- ggplot(estciv.es.linhab, aes(x = factor(ANOOBITO), y = PERCENTUAL, fill = ESTCIV)) +
+  geom_bar(stat = "identity") +
+  labs(x = "Ano", y = "Porcentagem (%)", fill = "Estado Civil",
+       title = "% de Mortes por Psicoativos no ES por Estado Civil e Ano - Variável LINHAB") +
+  theme_classic() +
+  theme(plot.title = element_text(size = 10),
+        axis.text = element_text(size = 10))
+
+# Exibir o gráfico
+print(proporcao.estciv.es.linhab)
+
+# Salvar gráfico
+ggsave(filename = "variavel_linhab/proporcao_estciv_es_linhab.png", 
+       plot = proporcao.estciv.es.linhab,
+       width = 3.5, height = 2.5, dpi = 150)
+
+
+
+
+
+
+#FAIXA ETARIA
+
+#BR
+
+#montar coluna de faixa etaria
+dados_br_linhab$FAIXAETA <- cut(dados_br_linhab$IDADE2,
+                                  breaks = c(-Inf, 12, 17, 30, 60, Inf),
+                                  labels = c("0-12 anos", "13-17 anos", "18-30 anos", "31-60 anos", "60+ anos"),
+                                  right = TRUE) #inclusivo a direita (x-y]
+
+#agrupar por faixa etaria
+faixaeta.br.linhab <- dados_br_linhab %>%
+  group_by(ANOOBITO, FAIXAETA) %>%
+  summarise(N.OBITOS = n()) %>%
+  ungroup() %>%
+  group_by(ANOOBITO) %>%
+  mutate(TOTAL_ANO = sum(N.OBITOS)) %>%
+  mutate(PERCENTUAL = (N.OBITOS / TOTAL_ANO) * 100) %>%
+  as.data.frame()
+
+
+# Plotar gráfico de séries
+series.faixaeta.br.linhab <- ggplot(data = faixaeta.br.linhab, aes(x = ANOOBITO, y = N.OBITOS, color = FAIXAETA)) +
+  geom_line(linewidth = 0.5, linetype = "solid") +
+  geom_point(shape = 15) +
+  labs(title = "Número de óbitos no Brasil por Faixa Etária - variável LINHAB",
+       x = "Anos", y = "Óbitos Totais") +
+  theme_classic() +
+  theme(plot.title = element_text(size = 10))
+
+# Exibir o gráfico
+print(series.faixaeta.br.linhab)
+
+#salvar grafico
+ggsave(filename = "variavel_linhab/series_faixaeta_br_linhab.png", 
+       plot = series.faixaeta.br.linhab,
+       width = 3.5, height = 2.5, dpi = 150)
+
+#plotar grafico de proporção de mortes por faixa etaria a cada ano
+proporcao.faixaeta.br.linhab <- ggplot(faixaeta.br.linhab, aes(x = factor(ANOOBITO), y = PERCENTUAL, fill = FAIXAETA)) +
+  geom_bar(stat = "identity") +
+  labs(x = "Ano", y = "Porcentagem (%)", fill = "Faixa Etária",
+       title = "% de Mortes por Psicoativos no Brasil por Faixa Etária e Ano - Variável LINHAB") +
+  theme_classic() +
+  theme(plot.title = element_text(size = 10),
+        axis.text = element_text(size = 10))
+
+# Exibir o gráfico
+print(proporcao.faixaeta.br.linhab)
+
+# Salvar gráfico
+ggsave(filename = "variavel_linhab/proporcao_faixaeta_br_linhab.png", 
+       plot = proporcao.faixaeta.br.linhab,
+       width = 3.5, height = 2.5, dpi = 150)
+
+
+
+#ES
+
+#montar coluna de faixa etaria
+dados_es_linhab$FAIXAETA <- cut(dados_es_linhab$IDADE2,
+                                  breaks = c(-Inf, 12, 17, 30, 60, Inf),
+                                  labels = c("0-12 anos", "13-17 anos", "18-30 anos", "31-60 anos", "60+ anos"),
+                                  right = TRUE) #inclusivo a direita (x-y]
+
+#agrupar por faixa etaria
+faixaeta.es.linhab <- dados_es_linhab %>%
+  group_by(ANOOBITO, FAIXAETA) %>%
+  summarise(N.OBITOS = n()) %>%
+  ungroup() %>%
+  group_by(ANOOBITO) %>%
+  mutate(TOTAL_ANO = sum(N.OBITOS)) %>%
+  mutate(PERCENTUAL = (N.OBITOS / TOTAL_ANO) * 100) %>%
+  as.data.frame()
+
+
+# Plotar gráfico de séries
+series.faixaeta.es.linhab <- ggplot(data = faixaeta.es.linhab, aes(x = ANOOBITO, y = N.OBITOS, color = FAIXAETA)) +
+  geom_line(linewidth = 0.5, linetype = "solid") +
+  geom_point(shape = 15) +
+  labs(title = "Número de óbitos no ES por Faixa Etária - variável LINHAB",
+       x = "Anos", y = "Óbitos Totais") +
+  theme_classic() +
+  theme(plot.title = element_text(size = 10))
+
+# Exibir o gráfico
+print(series.faixaeta.es.linhab)
+
+#salvar grafico
+ggsave(filename = "variavel_linhab/series_faixaeta_es_linhab.png", 
+       plot = series.faixaeta.es.linhab,
+       width = 3.5, height = 2.5, dpi = 150)
+
+#plotar grafico de proporção de mortes por faixa etaria a cada ano
+proporcao.faixaeta.es.linhab <- ggplot(faixaeta.es.linhab, aes(x = factor(ANOOBITO), y = PERCENTUAL, fill = FAIXAETA)) +
+  geom_bar(stat = "identity") +
+  labs(x = "Ano", y = "Porcentagem (%)", fill = "Faixa Etária",
+       title = "% de Mortes por Psicoativos no ES por Faixa Etária e Ano - Variável LINHAB") +
+  theme_classic() +
+  theme(plot.title = element_text(size = 10),
+        axis.text = element_text(size = 10))
+
+# Exibir o gráfico
+print(proporcao.faixaeta.es.linhab)
+
+# Salvar gráfico
+ggsave(filename = "variavel_linhab/proporcao_faixaeta_es_linhab.png", 
+       plot = proporcao.faixaeta.es.linhab,
+       width = 3.5, height = 2.5, dpi = 150)
+
