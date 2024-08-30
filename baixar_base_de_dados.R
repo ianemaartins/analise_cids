@@ -11,10 +11,10 @@ library(lubridate)
 remotes::install_github("rfsaldanha/microdatasus")
 
 # Baixar, processar e salvar dados
-for (ano in 2018:2022) {
+for (ano in 2013:2022) {
   dados <- fetch_datasus(year_start = ano, year_end = ano, information_system = "SIM-DO")
   dados <- process_sim(dados)
   dados <- dados %>%
-    select(ATESTADO, CAUSABAS, CAUSABAS_O, CB_PRE, LINHAA, LINHAB, LINHAC, LINHAD, LINHAII, NECROPSIA, CODMUNOCOR, CODMUNRES, DTNASC, DTOBITO, IDADE, RACACOR, SEXO, ESTCIV, ESC, OCUP, LOCOCOR,  )
+    select(CAUSABAS, CAUSABAS_O, CB_PRE, LINHAA, LINHAB, LINHAC, LINHAD, LINHAII, NECROPSIA, CODMUNOCOR, CODMUNRES, DTNASC, DTOBITO, RACACOR, SEXO, ESTCIV, ESC, OCUP, LOCOCOR,  )
   saveRDS(dados, paste0("dados_", ano,'.rds'))
 }

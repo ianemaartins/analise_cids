@@ -2,7 +2,7 @@ library(readr)
 
 
 #LER BASES DE DADOS
-dados_br <- c()
+dados_br <- data.frame()
 
 for (ano in 2018:2021) {
   
@@ -57,11 +57,11 @@ dados_br_causabaso <- dados_br[grepl("F1", dados_br$CAUSABAS_O, ignore.case = TR
 #es
 dados_es_causabaso <- dados_es[grepl("F1", dados_es$CAUSABAS_O, ignore.case = TRUE),]
 
-#ATESTADO
+#ATESTADO (alguns anos não possuem essa variavel)
 #br
-dados_br_atestado <- dados_br[grepl("F1", dados_br$ATESTADO, ignore.case = TRUE),]
+#dados_br_atestado <- dados_br[grepl("F1", dados_br$ATESTADO, ignore.case = TRUE),]
 #es
-dados_es_atestado <- dados_es[grepl("F1", dados_es$ATESTADO, ignore.case = TRUE),]
+#dados_es_atestado <- dados_es[grepl("F1", dados_es$ATESTADO, ignore.case = TRUE),]
 
 #CB_PRE - contem apenas dados NA
 
