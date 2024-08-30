@@ -1,10 +1,12 @@
 library(readr)
+library(dplyr)
+library(lubridate)
 
 
 #LER BASES DE DADOS
 dados_br <- data.frame()
 
-for (ano in 2018:2021) {
+for (ano in 2013:2022) {
   
   df2 <- readRDS(paste0("bases_de_dados/dados_", ano,".rds"))
   dados_br <- bind_rows(df2,dados_br)
