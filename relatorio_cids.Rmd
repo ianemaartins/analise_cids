@@ -9,6 +9,15 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+library(dplyr)
+library(DT)
+```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+df_na_porcentagem <- read.csv("graficos_comparacao/na_porcentagem_por_ano.csv")
+```
+
 <br>
 
 ## 1. Introdução
@@ -39,13 +48,13 @@ Para termos uma medida de comparação, tomaremos a variável CAUSABAS como padr
 
 <br>
 
-```{r, echo=FALSE, out.width="70%"}
+```{r, echo=FALSE, out.width="80%", fig.align="center"}
 knitr::include_graphics("graficos_comparacao/obs_por_variavel.png")
 ```
 
 <br>
 
-```{r, echo=FALSE, out.width="70%"}
+```{r, echo=FALSE, out.width="80%", fig.align="center"}
 knitr::include_graphics("graficos_comparacao/mortes_por_variavel.png")
 ```
 
@@ -59,14 +68,75 @@ Essa análise pode indicar como os psicoativos colaboram para o estado que leva 
 
 <br>
 
-# 3. 
+## 3. Idade de Faixa Etária
 
+<br>
+
+```{r, echo=FALSE, out.width="80%", fig.align="center"}
+knitr::include_graphics("graficos_comparacao/idade_por_variavel.png")
+```
+
+<br>
+
+```{r, echo=FALSE, out.width="80%", fig.align="center"}
+knitr::include_graphics("graficos_comparacao/grafico_series_faixaeta.png")
+```
+
+<br>
+
+```{r, echo=FALSE, out.width="80%", fig.align="center"}
+knitr::include_graphics("graficos_comparacao/boxplot_idades_por_variavel.png")
+```
+
+<br>
+
+## 4. Sexo e Raça
+
+<br>
+
+```{r, echo=FALSE, out.width="80%", fig.align="center"}
+knitr::include_graphics("graficos_comparacao/grafico_series_genero.png")
+```
+
+<br>
+
+```{r, echo=FALSE, out.width="80%", fig.align="center"}
+knitr::include_graphics("graficos_comparacao/grafico_series_raca.png")
+```
+
+<br>
+
+## 5. Dados NA
+
+<br>
+
+```{r, echo=FALSE, out.width="80%", fig.align="center"}
+df_na_porcentagem <- df_na_porcentagem %>%
+  rename(
+    `Ano do óbito` = ANOOBITO,
+    `Nº de Casos` = Total_Casos,
+    `Nº de NAs` = Total_NA,
+    `% de NAs` = Porcentagem_NA,
+    `Variável do CID` = Variavel_CID,
+    `Variável Sociodemográfica` = Var_Sociodemo
+  ) %>%
+  mutate(`% de NAs` = round(`% de NAs`, 2)) 
+
+datatable(
+  df_na_porcentagem,
+  filter = 'top',  # Adiciona filtros no topo de cada coluna
+  options = list(pageLength = 10),  # Mostra 10 linhas por página
+  caption = 'Porcentagem de Dados NA por Ano, Variável do CID e Variável Sociodemográfica'
+)
+```
 
 
 <br>
 
-## Próximos Passos
+## 6. Próximos Passos
 
 <br>
 
 1. Dentro dos casos de mortes por psicoativos explicitados na LINHAII, investigar qual foi a causa básica da morte, isto é, as CIDs presentes em CAUSABAS.
+
+<br>
