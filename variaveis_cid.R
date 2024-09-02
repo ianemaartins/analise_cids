@@ -10,11 +10,16 @@ Sys.setlocale("LC_ALL", "pt_BR.UTF-8") #configurar o R pra aceitar acentuação 
 
 # Definir um tema global para todos os gráficos
 theme_padronizado <- theme(
-  plot.title = element_text(size = 18),   # Tamanho do título
-  axis.title = element_text(size = 12), # Tamanho dos títulos dos eixos
-  axis.text = element_text(size = 12),    # Tamanho dos textos dos eixos
-  legend.title = element_text(size = 12),  # Tamanho dos títulos das legendas
-  legend.text = element_text(size = 12),   # Tamanho dos textos das legendas
+  plot.title = element_text(size = 22),   # Tamanho do título
+  axis.title = element_text(size = 15),   # Tamanho dos títulos dos eixos
+  axis.text = element_text(size = 15),    # Tamanho dos textos dos eixos
+  legend.position = "right",              # Mantém a posição da legenda à direita
+  legend.justification = "top",           # Alinha a legenda ao topo
+  legend.box.margin = margin(t = 0, r = 0, b = 0, l = 0), # Remove margens extras
+  legend.key.height = unit(0, "lines"),   # Define a altura da chave da legenda para 0
+  legend.key.width = unit(0, "lines"),    # Define a largura da chave da legenda para 0
+  legend.title = element_blank(),         # Remove o título da legenda
+  legend.text = element_blank()           # Remove o texto da legenda
 )
 
 # Aplicar o tema a todos os gráficos subsequentes
@@ -43,7 +48,7 @@ obs_variavel <- data.frame(Nome = nomes_variaveis, Observacoes = num_obs) #criar
 obs.por.variavel <- ggplot(obs_variavel, aes(x = Nome, y = Observacoes, fill = Nome)) +
   geom_bar(stat = "identity") +
   scale_y_continuous(labels = comma) +  # tirar notação científica
-  labs(title = "Número de Observações por Variável",
+  labs(title = "Observações por Variável CID - BR",
        x = "Variável",
        y = "Número de Observações")
 
@@ -79,7 +84,7 @@ for (i in seq_along(lista_dfs)) {
 # Plotar o gráfico
 mortes.por.variavel <- ggplot(df_comparacoes, aes(x = ANOOBITO, y = Total_Mortes, color = Variavel, group = Variavel)) +
   geom_line(size = 1) +
-  labs(title = "Número Total de Mortes por Ano",
+  labs(title = "Mortes por Psicoativos por Ano - BR",
        x = "Ano",
        y = "Número de Mortes") +
   scale_x_continuous(breaks = 2013:2022)  # Definir os anos no eixo x
@@ -97,7 +102,7 @@ ggsave(filename = "graficos_comparacao/mortes_por_variavel.png",
 # Gráfico da idade média das mortes por ano
 idade.por.variavel <- ggplot(df_comparacoes, aes(x = ANOOBITO, y = Media_Idade, color = Variavel, group = Variavel)) +
   geom_line(size = 1) +
-  labs(title = "Idade Média das Mortes por Ano",
+  labs(title = "Idade Média das Mortes por Ano - BR",
        x = "Ano",
        y = "Idade Média") +
   scale_x_continuous(breaks = 2013:2022)+
@@ -127,7 +132,7 @@ for (i in seq_along(lista_dfs)) {
 
 boxplot_idades <- ggplot(df_idades, aes(x = Variavel, y = IDADE2, color = Variavel)) +
   geom_boxplot() +
-  labs(title = "Distribuição das Idades por Variável",
+  labs(title = "Idades por Variável CID - BR",
        x = "Variável",
        y = "Idade")
 
@@ -164,7 +169,7 @@ grafico_series_faixaeta <- ggplot(df_faixas_etarias, aes(x = ANOOBITO, y = Total
   geom_line(aes(linetype = Variavel), size = 1) +
   geom_point(size = 3) +
   scale_shape_manual(values = c("[30-60)" = 16, "[60-infinito)" = 15)) +  # Bolinha para [30-60), quadrado para [60-infinito)
-  labs(title = "Distribuição das Mortes por Faixa Etária e Variável",
+  labs(title = "Mortes por Faixa Etária e Variável CID - BR",
        x = "Ano",
        y = "Quantidade de Pessoas",
        shape = "Faixa Etária") +
@@ -204,7 +209,7 @@ grafico_series_genero <- ggplot(df_genero, aes(x = ANOOBITO, y = Total, color = 
   geom_line(aes(linetype = Variavel), size = 1) +
   geom_point(size = 3) +
   scale_shape_manual(values = c("Masculino" = 16, "Feminino" = 17)) +  # Bolinha para masculino, triângulo para feminino
-  labs(title = "Distribuição das Mortes por Sexo e Variável",
+  labs(title = "Mortes por Sexo e Variável CID - BR",
        x = "Ano",
        y = "Número de Mortes",
        shape = "Sexo") +
@@ -249,7 +254,7 @@ grafico_series_raca <- ggplot(df_raca, aes(x = ANOOBITO, y = Total, color = Vari
   geom_line(aes(linetype = Variavel), size = 1) +
   geom_point(size = 3) +
   scale_shape_manual(values = c("Brancos" = 16, "Pretos/Pardos" = 17)) +  # Bolinha para Brancos, triângulo para Pretos/Pardos
-  labs(title = "Distribuição das Mortes por Raça e Variável",
+  labs(title = "Mortes por Raça e Variável CID - BR",
        x = "Ano",
        y = "Número de Mortes",
        shape = "Raça") +
@@ -295,7 +300,7 @@ datatable(
   df_na_porcentagem,
   filter = 'top',  # Adiciona filtros no topo de cada coluna
   options = list(pageLength = 10),  # Mostra 10 linhas por página
-  caption = 'Porcentagem de Dados NA por Ano, Variável do CID e Variável Sociodemográfica'
+  caption = 'Porcentagem de Dados NA por Ano, Variável do CID e Variável Sociodemográfica - BR'
 )
 
 # Salvar a tabela como CSV ou outro formato se necessário
