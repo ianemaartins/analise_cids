@@ -1,2 +1,5 @@
 *.R linguist-language=R
 *.html linguist-detectable=false
+node_modules/* linguist-vendored
+*.min.js linguist-vendored
+*.json linguist-vendored
