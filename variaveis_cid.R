@@ -1,4 +1,6 @@
 #-------------- CONFIGURACOES INICIAIS ----------------------------
+#rodar primeiramente o codigo de filtragem de dados
+
 
 library(ggplot2)
 library(scales)
@@ -6,28 +8,33 @@ library(dplyr)
 library(tidyr)
 library(DT)
 
+
+#----------------------- PADRONIZACAO -------------------------------------
+
+
 Sys.setlocale("LC_ALL", "pt_BR.UTF-8") #configurar o R pra aceitar acentuação nas palavras
 
-# Definir um tema global para todos os gráficos
-theme_padronizado <- theme(
-  plot.title = element_text(size = 22),   # Tamanho do título
-  axis.title = element_text(size = 15),   # Tamanho dos títulos dos eixos
-  axis.text = element_text(size = 15),    # Tamanho dos textos dos eixos
-  legend.position = "right",              # Mantém a posição da legenda à direita
-  legend.justification = "top",           # Alinha a legenda ao topo
-  legend.box.margin = margin(t = 0, r = 0, b = 0, l = 0), # Remove margens extras
-  legend.key.height = unit(0, "lines"),   # Define a altura da chave da legenda para 0
-  legend.key.width = unit(0, "lines"),    # Define a largura da chave da legenda para 0
-  legend.title = element_blank(),         # Remove o título da legenda
-  legend.text = element_blank()           # Remove o texto da legenda
-)
+# Definir um tema global para todos os gráficos GGPLOT
+#theme_padronizado <- theme(
+ # plot.title = element_text(size = 16),   # Tamanho do título
+ # axis.title = element_text(size = 11),   # Tamanho dos títulos dos eixos
+ # axis.text = element_text(size = 11),    # Tamanho dos textos dos eixos
+  #legend.position = "right",              # Mantém a posição da legenda à direita
+  #legend.justification = "top",           # Alinha a legenda ao topo
+  #legend.box.margin = margin(t = 0, r = 0, b = 0, l = 0), # Remove margens extras
+  #legend.key.height = unit(0, "lines"),   # Define a altura da chave da legenda para 0
+  #legend.key.width = unit(0, "lines"),    # Define a largura da chave da legenda para 0
+  #legend.title = element_blank(),         # Remove o título da legenda
+  #legend.text = element_blank()           # Remove o texto da legenda
+#)
 
 # Aplicar o tema a todos os gráficos subsequentes
-theme_set(theme_minimal() + theme_padronizado)
+#theme_set(theme_minimal() + theme_padronizado)
+
+
 
 #criar pasta pra salvar os graficos
 #dir.create("graficos_comparacao")
-
 
 
 
@@ -45,18 +52,21 @@ num_obs <- sapply(lista_dfs, nrow)#contar o numero de linhas de cada dataframe
 obs_variavel <- data.frame(Nome = nomes_variaveis, Observacoes = num_obs) #criar dataframe com o numero de linhas de cada variavel
 
 
-obs.por.variavel <- ggplot(obs_variavel, aes(x = Nome, y = Observacoes, fill = Nome)) +
+#plotando e salvando grafico ggplot
+
+obs.por.variavel <- ggplot(obs_variavel, aes(x = Nome, y = Observacoes, fill = Nome, 
+                                             text = paste("Variável:", Nome, "<br>",
+                                                          "N. de Observações:", Observacoes))) +
   geom_bar(stat = "identity") +
   scale_y_continuous(labels = comma) +  # tirar notação científica
   labs(title = "Observações por Variável CID - BR",
        x = "Variável",
-       y = "Número de Observações")
+       y = "Número de Observações")+
+  theme(legend.position = "none")  # Remove a legenda
 
-#salvar grafico
 ggsave(filename = "graficos_comparacao/obs_por_variavel.png", 
        plot = obs.por.variavel, 
        width = 10, height = 6, dpi = 150)
-
 
 
 # -------- COMPARACAO ENTRE O NUMERO TOTAL DE MORTES POR ANO EM CADA VARIAVEL----------------
@@ -81,8 +91,12 @@ for (i in seq_along(lista_dfs)) {
 
 #rm("df_agrupado")
 
+
+
 # Plotar o gráfico
-mortes.por.variavel <- ggplot(df_comparacoes, aes(x = ANOOBITO, y = Total_Mortes, color = Variavel, group = Variavel)) +
+mortes.por.variavel <- ggplot(df_comparacoes, aes(x = ANOOBITO, y = Total_Mortes, color = Variavel, group = Variavel, 
+                                                  text = paste("Ano do Óbito:", ANOOBITO, "<br>",
+                                                               "N. de Mortes:", Total_Mortes, "<br>", "Variável CID:", Variavel))) +
   geom_line(size = 1) +
   labs(title = "Mortes por Psicoativos por Ano - BR",
        x = "Ano",
@@ -96,11 +110,14 @@ ggsave(filename = "graficos_comparacao/mortes_por_variavel.png",
        width = 10, height =12, dpi = 150)
 
 
-
 # ----------------- IDADE E FAIXA ETARIA-------------------------------
 
 # Gráfico da idade média das mortes por ano
-idade.por.variavel <- ggplot(df_comparacoes, aes(x = ANOOBITO, y = Media_Idade, color = Variavel, group = Variavel)) +
+idade.por.variavel <- ggplot(df_comparacoes, aes(x = ANOOBITO, y = Media_Idade, color = Variavel, group = Variavel,
+                                                  text = paste("Ano do Óbito:", ANOOBITO, "<br>",
+                                                               "Media das Idade:", Media_Idade, "<br>", "Variável CID:", Variavel))) +
+  
+  
   geom_line(size = 1) +
   labs(title = "Idade Média das Mortes por Ano - BR",
        x = "Ano",
@@ -130,7 +147,7 @@ for (i in seq_along(lista_dfs)) {
   df_idades <- rbind(df_idades, df[, c("IDADE2", "Variavel")]) # Selecionar apenas as colunas que eu quero e combinar com o dataframe criado
 }
 
-boxplot_idades <- ggplot(df_idades, aes(x = Variavel, y = IDADE2, color = Variavel)) +
+boxplot.idades <- ggplot(df_idades, aes(x = Variavel, y = IDADE2, color = Variavel)) +
   geom_boxplot() +
   labs(title = "Idades por Variável CID - BR",
        x = "Variável",
@@ -138,7 +155,7 @@ boxplot_idades <- ggplot(df_idades, aes(x = Variavel, y = IDADE2, color = Variav
 
 # Salvar o gráfico
 ggsave(filename = "graficos_comparacao/boxplot_idades_por_variavel.png", 
-       plot = boxplot_idades, 
+       plot = boxplot.idades, 
        width = 10, height = 6, dpi = 150)
 
 
@@ -165,22 +182,28 @@ for (i in seq_along(lista_dfs)) {
 } 
 
 # Criar o gráfico de séries
-grafico_series_faixaeta <- ggplot(df_faixas_etarias, aes(x = ANOOBITO, y = Total, color = Variavel, shape = Faixa_Etaria)) +
-  geom_line(aes(linetype = Variavel), size = 1) +
-  geom_point(size = 3) +
+grafico.series.faixaeta <- ggplot(df_faixas_etarias, aes(x = ANOOBITO, y = Total, color = Variavel, shape = Faixa_Etaria,
+                                                         group = interaction(Variavel, Faixa_Etaria),  # Garante que as linhas sejam conectadas corretamente
+                                                         text = paste("Ano do Óbito:", ANOOBITO, "<br>",
+                                                                      "N. de Mortes:", Total, "<br>", 
+                                                                      "Variável CID:", Variavel, "<br>", 
+                                                                      "Faixa Etária:", Faixa_Etaria))) +
+  geom_line(aes(linetype = Variavel), size = 0.5) +
+  geom_point(size = 1.5) +
   scale_shape_manual(values = c("[30-60)" = 16, "[60-infinito)" = 15)) +  # Bolinha para [30-60), quadrado para [60-infinito)
   labs(title = "Mortes por Faixa Etária e Variável CID - BR",
        x = "Ano",
        y = "Quantidade de Pessoas",
        shape = "Faixa Etária") +
+  theme(legend.position = "none") + # Remove a legenda
   scale_x_continuous(breaks = 2013:2022)  # Definir os anos no eixo x
 
 # Exibir o gráfico
-print(grafico_series_faixaeta)
+print(grafico.series.faixaeta)
 
 # Salvar o gráfico
 ggsave(filename = "graficos_comparacao/grafico_series_faixaeta.png", 
-       plot = grafico_series_faixaeta, 
+       plot = grafico.series.faixaeta, 
        width = 10, height = 12, dpi = 150)
 
 
@@ -205,9 +228,12 @@ for (i in seq_along(lista_dfs)) {
 }
 
 # Criar o gráfico
-grafico_series_genero <- ggplot(df_genero, aes(x = ANOOBITO, y = Total, color = Variavel, shape = SEXO)) +
-  geom_line(aes(linetype = Variavel), size = 1) +
-  geom_point(size = 3) +
+grafico.series.genero <- ggplot(df_genero, aes(x = ANOOBITO, y = Total, color = Variavel, shape = SEXO,
+                                               group = interaction(Variavel, SEXO), 
+                                               text = paste("Ano do Óbito:", ANOOBITO, "<br>",
+                                                            "N. de Mortes:", Total, "<br>", "Variável CID:", Variavel, "<br>", "Sexo:", SEXO ))) +
+  geom_line(aes(linetype = Variavel), size = 0.5) +
+  geom_point(size = 1.5) +
   scale_shape_manual(values = c("Masculino" = 16, "Feminino" = 17)) +  # Bolinha para masculino, triângulo para feminino
   labs(title = "Mortes por Sexo e Variável CID - BR",
        x = "Ano",
@@ -216,11 +242,11 @@ grafico_series_genero <- ggplot(df_genero, aes(x = ANOOBITO, y = Total, color = 
   scale_x_continuous(breaks = 2013:2022)
 
 # Exibir o gráfico
-print(grafico_series_genero)
+print(grafico.series.genero)
 
 # Salvar o gráfico
 ggsave(filename = "graficos_comparacao/grafico_series_genero.png", 
-       plot = grafico_series_genero, 
+       plot = grafico.series.genero, 
        width = 10, height = 12, dpi = 150)
 
 
@@ -250,19 +276,26 @@ for (i in seq_along(lista_dfs)) {
 }
 
 # Criar o gráfico de séries
-grafico_series_raca <- ggplot(df_raca, aes(x = ANOOBITO, y = Total, color = Variavel, shape = Raca_Agrupada)) +
-  geom_line(aes(linetype = Variavel), size = 1) +
-  geom_point(size = 3) +
+grafico.series.raca <- ggplot(df_raca, aes(x = ANOOBITO, y = Total, color = Variavel, shape = Raca_Agrupada,
+                                           text = paste("Ano do Óbito:", ANOOBITO, "<br>",
+                                                        "N. de Mortes:", Total, "<br>", "Variável CID:", Variavel, "<br>", "Cor/Raça:", Raca_Agrupada ))) +
+  geom_line(aes(group = interaction(Variavel, Raca_Agrupada)), size = 0.5) +
+  geom_point(size = 1.5) +
   scale_shape_manual(values = c("Brancos" = 16, "Pretos/Pardos" = 17)) +  # Bolinha para Brancos, triângulo para Pretos/Pardos
   labs(title = "Mortes por Raça e Variável CID - BR",
        x = "Ano",
        y = "Número de Mortes",
+       color = "Variável CID",
        shape = "Raça") +
-  scale_x_continuous(breaks = 2013:2022)  
+  scale_x_continuous(breaks = 2013:2022) +
+  guides(
+    color = guide_legend(title = "Variável CID", order = 1),  # Legenda para as cores
+    shape = guide_legend(title = "Raça", order = 2)  # Legenda para os formatos
+  ) 
 
 # Salvar o gráfico
 ggsave(filename = "graficos_comparacao/grafico_series_raca.png", 
-       plot = grafico_series_raca, 
+       plot = grafico.series.raca,
        width = 10, height = 12, dpi = 150)
 
 

@@ -12,12 +12,27 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 library(dplyr)
 library(DT)
+library(plotly)
+library(ggplot2)
+```
+
+```{r, include=FALSE}
+# Carregar o script que gera os gráficos
+source("filtragem.R")
+source("variaveis_cid.R")
+source("variaveis_cid_es.R")
 ```
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
 df_na_porcentagem <- read.csv("graficos_comparacao/na_porcentagem_por_ano.csv")
 df_na_porcentagem_es <- read.csv("graficos_comparacao/na_porcentagem_por_ano_es.csv")
 ```
+
+<style>
+  .container {
+    width: 100% !important;
+  }
+</style>
 
 <br>
 
@@ -48,9 +63,54 @@ Para começar a análise de dados das variáveis referentes às CIDs, precisamos
 
 <br>
 
-```{r, echo=FALSE, fig.show='hold', out.width="48%"}
-knitr::include_graphics("graficos_comparacao/obs_por_variavel.png")
-knitr::include_graphics("graficos_comparacao/obs_por_variavel_es.png")
+```{r, echo=FALSE, fig.show='hold', out.width="100%", message=FALSE, warning=FALSE}
+
+obs.por.variavel.interativo <- ggplotly(obs.por.variavel, tooltip = "text") %>%
+  layout(
+    xaxis = list(
+      title = list(text = "Variável CID", font = list(size = 14)),  # Ajusta o tamanho da fonte do título do eixo X
+      tickfont = list(size = 11)  # Ajusta o tamanho da fonte dos valores no eixo X
+    ),
+    yaxis = list(
+      title = list(text = "Observações", font = list(size = 14)),  # Ajusta o tamanho da fonte do título do eixo Y
+      tickfont = list(size = 11)  # Ajusta o tamanho da fonte dos valores no eixo Y
+    ),
+    showlegend = FALSE  # Remove a legenda
+  )
+
+obs.por.variavel.es.interativo <- ggplotly(obs.por.variavel.es, tooltip = "text") %>%
+  layout(
+    xaxis = list(
+      title = list(text = "Variável CID", font = list(size = 14)),  # Ajusta o tamanho da fonte do título do eixo X
+      tickfont = list(size = 11)  # Ajusta o tamanho da fonte dos valores no eixo X
+    ),
+    yaxis = list(
+      title = list(text = "Observações", font = list(size = 14)),  # Ajusta o tamanho da fonte do título do eixo Y
+      tickfont = list(size = 11)  # Ajusta o tamanho da fonte dos valores no eixo Y
+    ),
+    showlegend = FALSE  # Remove a legenda
+  )
+
+# Usar subplot para colocar os gráficos lado a lado
+subplot(obs.por.variavel.interativo, obs.por.variavel.es.interativo, nrows = 1, widths = c(0.49, 0.49)) %>%
+  layout(
+    title = list(text = "Número de Observações por Variável no Brasil e no ES", font = list(size = 16)),
+    margin = list(l = 0, r = 0, t = 50, b = 50),
+    xaxis = list(
+      title = list(text = "Variável CID", font = list(size = 14)),  # Ajusta o título do eixo X do primeiro gráfico
+      domain = c(0, 0.45)
+    ),
+    xaxis2 = list(
+      title = list(text = "Variável CID", font = list(size = 14)),  # Ajusta o título do eixo X do segundo gráfico
+      domain = c(0.55, 1)
+    ),
+    yaxis = list(
+      title = list(text = "Observações", font = list(size = 14))  # Ajusta o título do eixo Y compartilhado
+    ),
+    spacing = 0.05  # Espaçamento entre os gráficos
+  )
+
+
 ```
 
 <br>
@@ -66,9 +126,65 @@ No gráfico a seguir, é possível ver o número de mortes por psicoativos entre
 
 <br>
 
-```{r, echo=FALSE, fig.show='hold', out.width="48%"}
-knitr::include_graphics("graficos_comparacao/mortes_por_variavel.png")
-knitr::include_graphics("graficos_comparacao/mortes_por_variavel_es.png")
+```{r, echo=FALSE, fig.show='hold', out.width="100%", message=FALSE, warning=FALSE}
+
+mortes.por.variavel.interativo <- ggplotly(mortes.por.variavel, tooltip = "text") %>%
+  layout(
+    xaxis = list(
+      title = list(text = "Ano", font = list(size = 14)),  # Ajusta o tamanho da fonte do título do eixo X
+      tickfont = list(size = 11)  # Ajusta o tamanho da fonte dos valores no eixo X
+    ),
+    yaxis = list(
+      title = list(text = "Mortes", font = list(size = 14)),  # Ajusta o tamanho da fonte do título do eixo Y
+      tickfont = list(size = 11)  # Ajusta o tamanho da fonte dos valores no eixo Y
+    ),
+    showlegend = FALSE  # Remove a legenda deste gráfico
+  )
+
+mortes.por.variavel.es.interativo <- ggplotly(mortes.por.variavel.es, tooltip = "text") %>%
+  layout(
+    xaxis = list(
+      title = list(text = "Ano", font = list(size = 14)),  # Ajusta o tamanho da fonte do título do eixo X
+      tickfont = list(size = 11)  # Ajusta o tamanho da fonte dos valores no eixo X
+    ),
+    yaxis = list(
+      title = list(text = "Mortes", font = list(size = 14)),  # Ajusta o tamanho da fonte do título do eixo Y
+      tickfont = list(size = 11)  # Ajusta o tamanho da fonte dos valores no eixo Y
+    ),
+    showlegend = FALSE  # Remove a legenda deste gráfico
+  )
+
+# Usar subplot para colocar os gráficos lado a lado
+subplot(mortes.por.variavel.interativo, mortes.por.variavel.es.interativo, nrows = 1, widths = c(0.49, 0.49)) %>%
+  layout(
+    title = list(
+      text = "Número de Mortes por Variável no Brasil e no ES", 
+      font = list(size = 16)
+    ),
+    legend = list(
+      title = list(text = "Variável CID", font = list(size = 14)),  # Ajustar o título da legenda
+      font = list(size = 10),  # Ajustar o tamanho da fonte da legenda
+      orientation = "h",  # Torna a legenda horizontal (opcional)
+      x = 0.5,  # Centraliza a legenda horizontalmente
+      xanchor = "center",  # Define o ponto de ancoragem
+      y = -0.2  # Ajusta a posição da legenda (ajuste conforme necessário)
+    ),
+    margin = list(l = 0, r = 0, t = 50, b = 50),
+    xaxis = list(
+      title = list(text = "Ano", font = list(size = 14)),  # Ajusta o título do eixo X do primeiro gráfico
+      domain = c(0, 0.45)
+    ),
+    xaxis2 = list(
+      title = list(text = "Ano", font = list(size = 14)),  # Ajusta o título do eixo X do segundo gráfico
+      domain = c(0.55, 1)
+    ),
+    yaxis = list(
+      title = list(text = "Mortes", font = list(size = 14))  # Ajusta o título do eixo Y compartilhado
+    ),
+    spacing = 0.05  # Espaçamento entre os gráficos
+  )
+
+
 ```
 
 <br>
@@ -79,7 +195,7 @@ No que diz respeito aos dados referentes ao estado do Espírito Santo, é possí
 
 <br>
 
-## 3. Idade de Faixa Etária
+## 3. Idade e Faixa Etária
 
 <br>
 
@@ -87,9 +203,65 @@ A primeira variável sociodemográfica a ser discutida será a idade. Para essa 
 
 <br>
 
-```{r, echo=FALSE, fig.show='hold', out.width="48%"}
-knitr::include_graphics("graficos_comparacao/idade_por_variavel.png")
-knitr::include_graphics("graficos_comparacao/idade_por_variavel_es.png")
+```{r, echo=FALSE, fig.show='hold', out.width="100%", message=FALSE, warning=FALSE}
+
+idade.por.variavel.interativo <- ggplotly(idade.por.variavel, tooltip = "text") %>%
+  layout(
+    xaxis = list(
+      title = list(text = "Ano", font = list(size = 14)),  # Ajusta o tamanho da fonte do título do eixo X
+      tickfont = list(size = 11)  # Ajusta o tamanho da fonte dos valores no eixo X
+    ),
+    yaxis = list(
+      title = list(text = "Média das Idades", font = list(size = 14)),  # Ajusta o tamanho da fonte do título do eixo Y
+      tickfont = list(size = 11)  # Ajusta o tamanho da fonte dos valores no eixo Y
+    ),
+    showlegend = FALSE  # Desativa a legenda deste gráfico para evitar duplicação
+  )
+
+idade.por.variavel.es.interativo <- ggplotly(idade.por.variavel.es, tooltip = "text") %>%
+  layout(
+    xaxis = list(
+      title = list(text = "Ano", font = list(size = 14)),  # Ajusta o tamanho da fonte do título do eixo X
+      tickfont = list(size = 11)  # Ajusta o tamanho da fonte dos valores no eixo X
+    ),
+    yaxis = list(
+      title = list(text = "Média das Idades", font = list(size = 14)),  # Ajusta o tamanho da fonte do título do eixo Y
+      tickfont = list(size = 11)  # Ajusta o tamanho da fonte dos valores no eixo Y
+    ),
+    legend = list(font = list(size = 14))  # Ajusta o tamanho da fonte da legenda
+  )
+
+# Usar subplot para colocar os gráficos lado a lado
+subplot(idade.por.variavel.interativo, idade.por.variavel.es.interativo, nrows = 1, widths = c(0.49, 0.49)) %>%
+  layout(
+    title = list(
+      text = "Idade Média das Mortes por Psicoativos no Brasil e no ES no Decorrer dos Anos", 
+      font = list(size = 16)
+    ),
+    legend = list(
+      title = list(text = "Variável CID", font = list(size = 14)),  # Ajustar o título da legenda
+      font = list(size = 14),  # Ajustar o tamanho da fonte da legenda
+      orientation = "h",  # Torna a legenda horizontal (opcional)
+      x = 0.5,  # Centraliza a legenda horizontalmente
+      xanchor = "center",  # Define o ponto de ancoragem
+      y = -0.2  # Ajusta a posição da legenda (ajuste conforme necessário)
+    ),
+    margin = list(l = 0, r = 0, t = 50, b = 50),
+    xaxis = list(
+      title = list(text = "Idade Média de Morte", font = list(size = 14)),  # Ajusta o título do eixo X do primeiro gráfico
+      domain = c(0, 0.45)
+    ),
+    xaxis2 = list(
+      title = list(text = "Idade Média de Morte", font = list(size = 14)),  # Ajusta o título do eixo X do segundo gráfico
+      domain = c(0.55, 1)
+    ),
+    yaxis = list(
+      title = list(text = "Ano", font = list(size = 14))  # Ajusta o título do eixo Y compartilhado
+    ),
+    spacing = 0.05  # Espaçamento entre os gráficos
+  )
+
+
 ```
 
 <br>
@@ -98,10 +270,59 @@ Inicialmente, a primeira característica que chama atenção nos gráficos é a 
 
 <br>
 
-```{r, echo=FALSE, fig.show='hold', out.width="48%"}
-knitr::include_graphics("graficos_comparacao/boxplot_idades_por_variavel.png")
-knitr::include_graphics("graficos_comparacao/boxplot_idades_por_variavel_es.png")
+```{r, echo=FALSE, fig.show='hold', out.width="100%", message=FALSE, warning=FALSE}
+
+boxplot.idades.interativo <- ggplotly(boxplot.idades) %>%
+  layout(
+    xaxis = list(
+      title = list(text = "Variável CID", font = list(size = 14)),  # Ajusta o tamanho da fonte do título do eixo X
+      tickfont = list(size = 11)  # Ajusta o tamanho da fonte dos valores no eixo X
+    ),
+    yaxis = list(
+      title = list(text = "Idade", font = list(size = 14)),  # Ajusta o tamanho da fonte do título do eixo Y
+      tickfont = list(size = 11)  # Ajusta o tamanho da fonte dos valores no eixo Y
+    ),
+    legend = list(
+      showlegend = FALSE  # Remove a legenda
+    )
+  )
+
+boxplot.idades.es.interativo <- ggplotly(boxplot.idades.es) %>%
+  layout(
+    xaxis = list(
+      title = list(text = "Variável CID", font = list(size = 14)),  # Ajusta o tamanho da fonte do título do eixo X
+      tickfont = list(size = 11)  # Ajusta o tamanho da fonte dos valores no eixo X
+    ),
+    yaxis = list(
+      title = list(text = "Idade", font = list(size = 14)),  # Ajusta o tamanho da fonte do título do eixo Y
+      tickfont = list(size = 11)  # Ajusta o tamanho da fonte dos valores no eixo Y
+    ),
+    legend = list(
+      showlegend = FALSE  # Remove a legenda
+    )
+  )
+
+# Usar subplot para colocar os gráficos lado a lado
+subplot(boxplot.idades.interativo, boxplot.idades.es.interativo, nrows = 1, widths = c(0.49, 0.49)) %>%
+  layout(
+    title = list(text = "Relação de Idade por Variável CID no Brasil e no ES", font = list(size = 16)),
+    margin = list(l = 0, r = 0, t = 50, b = 50),
+    xaxis = list(
+      title = list(text = "Variável CID", font = list(size = 14)),  # Ajusta o eixo X do primeiro gráfico
+      domain = c(0, 0.45)
+    ),
+    xaxis2 = list(
+      title = list(text = "Variável CID", font = list(size = 14)),  # Ajusta o eixo X do segundo gráfico
+      domain = c(0.55, 1)
+    ),
+    yaxis = list(
+      title = list(text = "Idade", font = list(size = 14))  # Ajusta o título do eixo Y compartilhado
+    ),
+    spacing = 0.05  # Espaçamento entre os gráficos
+  )
+
 ```
+
 
 <br>
 
@@ -113,9 +334,52 @@ Além disso, as linhas de mediana no gráfico do Brasil são mais centrais quand
 
 <br>
 
-```{r, echo=FALSE, fig.show='hold', out.width="48%"}
-knitr::include_graphics("graficos_comparacao/grafico_series_faixaeta.png")
-knitr::include_graphics("graficos_comparacao/grafico_series_faixaeta_es.png")
+```{r, echo=FALSE, fig.show='hold', out.width="100%", message=FALSE, warning=FALSE}
+
+grafico.series.faixaeta.interativo <- ggplotly(grafico.series.faixaeta, tooltip = "text") %>%
+  layout(
+    xaxis = list(
+      title = list(text = "Ano", font = list(size = 14)),  # Ajusta o tamanho da fonte do título do eixo X
+      tickfont = list(size = 11)  # Ajusta o tamanho da fonte dos valores no eixo X
+    ),
+    yaxis = list(
+      title = list(text = "N. de Mortes", font = list(size = 14)),  # Ajusta o tamanho da fonte do título do eixo Y
+      tickfont = list(size = 11)  # Ajusta o tamanho da fonte dos valores no eixo Y
+    )
+  )
+
+grafico.series.faixaeta.es.interativo <- ggplotly(grafico.series.faixaeta.es, tooltip = "text") %>%
+  layout(
+    xaxis = list(
+      title = list(text = "Ano", font = list(size = 14)),  # Ajusta o tamanho da fonte do título do eixo X
+      tickfont = list(size = 11)  # Ajusta o tamanho da fonte dos valores no eixo X
+    ),
+    yaxis = list(
+      title = list(text = "N. de Mortes", font = list(size = 14)),  # Ajusta o tamanho da fonte do título do eixo Y
+      tickfont = list(size = 11)  # Ajusta o tamanho da fonte dos valores no eixo Y
+    )
+  )
+
+# Usar subplot para colocar os gráficos lado a lado
+subplot(grafico.series.faixaeta.interativo, grafico.series.faixaeta.es.interativo, nrows = 1, widths = c(0.49, 0.49)) %>%
+  layout(
+    title = list(text = "Mortes por Faixa Etária e Variável CID no Brasil e no ES no Decorrer dos Anos", font = list(size = 16)),
+    margin = list(l = 0, r = 0, t = 50, b = 50),
+    xaxis = list(
+      title = list(text = "Ano", font = list(size = 14)),  # Ajusta o eixo X do primeiro gráfico
+      domain = c(0, 0.45)
+    ),
+    xaxis2 = list(
+      title = list(text = "Ano", font = list(size = 14)),  # Ajusta o eixo X do segundo gráfico
+      domain = c(0.55, 1)
+    ),
+    yaxis = list(
+      title = list(text = "N. de Mortes", font = list(size = 14))  # Ajusta o título do eixo Y compartilhado
+    ),
+    spacing = 0.05  # Espaçamento entre os gráficos
+  )
+
+
 ```
 
 <br>
@@ -139,10 +403,54 @@ Além disso, as raças/cores preta e parda foram agrupadas para facilitar a visu
 
 <br>
 
-```{r, echo=FALSE, fig.show='hold', out.width="48%"}
-knitr::include_graphics("graficos_comparacao/grafico_series_genero.png")
-knitr::include_graphics("graficos_comparacao/grafico_series_genero_es.png")
+```{r, echo=FALSE, fig.show='hold', out.width="100%", message=FALSE, warning=FALSE}
+
+grafico.series.genero.interativo <- ggplotly(grafico.series.genero, tooltip = "text") %>%
+  layout(
+    xaxis = list(
+      title = list(text = "Ano", font = list(size = 14)),  # Ajusta o tamanho da fonte do título do eixo X
+      tickfont = list(size = 11)  # Ajusta o tamanho da fonte dos valores no eixo X
+    ),
+    yaxis = list(
+      title = list(text = "N. de Mortes", font = list(size = 14)),  # Ajusta o tamanho da fonte do título do eixo Y
+      tickfont = list(size = 11)  # Ajusta o tamanho da fonte dos valores no eixo Y
+    )
+  )
+
+grafico.series.genero.es.interativo <- ggplotly(grafico.series.genero.es, tooltip = "text") %>%
+  layout(
+    xaxis = list(
+      title = list(text = "Ano", font = list(size = 14)),  # Ajusta o tamanho da fonte do título do eixo X
+      tickfont = list(size = 11)  # Ajusta o tamanho da fonte dos valores no eixo X
+    ),
+    yaxis = list(
+      title = list(text = "N. de Mortes", font = list(size = 14)),  # Ajusta o tamanho da fonte do título do eixo Y
+      tickfont = list(size = 11)  # Ajusta o tamanho da fonte dos valores no eixo Y
+    )
+  )
+
+# Usar subplot para colocar os gráficos lado a lado
+subplot(grafico.series.genero.interativo, grafico.series.genero.es.interativo, nrows = 1, widths = c(0.49, 0.49)) %>%
+  layout(
+    title = list(text = "Mortes por Psicoativos de acordo com o Sexo e Variável CID", font = list(size = 16)),
+    margin = list(l = 0, r = 0, t = 50, b = 50),
+    xaxis = list(
+      title = list(text = "Ano", font = list(size = 14)),  # Ajusta o eixo X do primeiro gráfico
+      domain = c(0, 0.45)
+    ),
+    xaxis2 = list(
+      title = list(text = "Ano", font = list(size = 14)),  # Ajusta o eixo X do segundo gráfico
+      domain = c(0.55, 1)
+    ),
+    yaxis = list(
+      title = list(text = "N. de Mortes", font = list(size = 14))  # Ajusta o título do eixo Y compartilhado
+    ),
+    spacing = 0.05  # Espaçamento entre os gráficos
+  )
+
+
 ```
+
 
 <br>
 
@@ -150,9 +458,65 @@ O gráfico de Mortes por Sexo e Variável CID mostra que, em todas as variáveis
 
 <br>
 
-```{r, echo=FALSE, fig.show='hold', out.width="48%"}
-knitr::include_graphics("graficos_comparacao/grafico_series_raca.png")
-knitr::include_graphics("graficos_comparacao/grafico_series_raca_es.png")
+```{r, echo=FALSE, fig.show='hold', out.width="100%", message=FALSE, warning=FALSE}
+
+grafico.series.raca.interativo <- ggplotly(grafico.series.raca, tooltip = "text") %>%
+  layout(
+    xaxis = list(
+      title = list(text = "Ano", font = list(size = 14)),  # Ajusta o tamanho da fonte do título do eixo X
+      tickfont = list(size = 11)  # Ajusta o tamanho da fonte dos valores no eixo X
+    ),
+    yaxis = list(
+      title = list(text = "N. de Mortes", font = list(size = 14)),  # Ajusta o tamanho da fonte do título do eixo Y
+      tickfont = list(size = 11)  # Ajusta o tamanho da fonte dos valores no eixo Y
+    ),
+    legend = list(
+      traceorder = "reversed",  # Mantém a ordem das legendas
+      title = list(text = "Legenda"),
+      x = 0.9,  # Posição da legenda horizontal
+      y = 1,  # Posição da legenda vertical
+      orientation = "v"  # Orientação vertical da legenda
+    )
+  )
+
+grafico.series.raca.es.interativo <- ggplotly(grafico.series.raca.es, tooltip = "text") %>%
+  layout(
+    xaxis = list(
+      title = list(text = "Ano", font = list(size = 14)),  # Ajusta o tamanho da fonte do título do eixo X
+      tickfont = list(size = 11)  # Ajusta o tamanho da fonte dos valores no eixo X
+    ),
+    yaxis = list(
+      title = list(text = "N. de Mortes", font = list(size = 14)),  # Ajusta o tamanho da fonte do título do eixo Y
+      tickfont = list(size = 11)  # Ajusta o tamanho da fonte dos valores no eixo Y
+    ),
+    legend = list(
+      traceorder = "reversed",  # Mantém as legendas separadas por grupo
+      title = list(text = "Legenda"),
+      x = 0.9,  # Posição da legenda horizontal
+      y = 1,  # Posição da legenda vertical
+      orientation = "v"  # Orientação vertical da legenda
+    )
+  )
+
+# Usar subplot para colocar os gráficos lado a lado
+subplot(grafico.series.raca.interativo, grafico.series.raca.es.interativo, nrows = 1, widths = c(0.49, 0.49)) %>%
+  layout(
+    title = list(text = "Mortes por Raça/Cor e Variável CID no Brasil e no ES no Decorrer dos Anos", font = list(size = 16)),
+    margin = list(l = 0, r = 0, t = 50, b = 50),
+    xaxis = list(
+      title = list(text = "Ano", font = list(size = 14)),  # Ajusta o eixo X do primeiro gráfico
+      domain = c(0, 0.45)
+    ),
+    xaxis2 = list(
+      title = list(text = "Ano", font = list(size = 14)),  # Ajusta o eixo X do segundo gráfico
+      domain = c(0.55, 1)
+    ),
+    yaxis = list(
+      title = list(text = "N. de Mortes", font = list(size = 14))  # Ajusta o título do eixo Y compartilhado
+    ),
+    spacing = 0.05  # Espaçamento entre os gráficos
+  )
+
 ```
 
 <br>
