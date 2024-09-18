@@ -2,8 +2,8 @@
 
 #necesário rodar o código "filtragem.R" antes
 
-library(plotly)
-library(htmlwidgets)
+#library(plotly)
+#library(htmlwidgets)
 
 
 #------------- QUAL A CAUSA BÁSICA DE MORTE MAIS COMUM EM MORTES QUE TIVERAM A CONTRIBUIÇÃO DE PSICOATIVOS? --------
@@ -243,6 +243,98 @@ gbarra_j00aj99 <-gbarra_j00aj99 %>%
 # Salvar o gráfico HTML
 pasta <- "graficos_comparacao/gbarra_j00aj99.html"
 saveWidget(gbarra_j00aj99, pasta)
+
+
+
+#-------------- Analise mais aprofundada CID C00-D48 -----------------
+
+df_c00ad48 <- dados_br_linhaii %>%
+  filter(categoria_causabas == "Neoplasias (tumores) (C00-D48)")
+
+# Função para categorizar os códigos CID C00-D48 , considerando apenas os três primeiros caracteres
+categorizar_cidc00ad48 <- function(causa) {
+  # Extrair os três primeiros caracteres
+  causa_principal <- substr(causa, 1, 3)
+  
+  if (causa_principal >= "C00" & causa_principal <= "C14") {
+    return("Neoplasias malignas do lábio, cavidade oral e faringe")
+  } else if (causa_principal >= "C15" & causa_principal <= "C26") {
+    return("Neoplasias malignas dos órgãos digestivos")
+  } else if (causa_principal >= "C30" & causa_principal <= "C39") {
+    return("Neoplasias malignas do aparelho respiratório e dos órgãos intratorácicos")
+  } else if (causa_principal >= "C40" & causa_principal <= "C41") {
+    return("Neoplasias malignas dos ossos e das cartilagens articulares")
+  } else if (causa_principal >= "C43" & causa_principal <= "C44") {
+    return("Melanoma e outras(os) neoplasias malignas da pele")
+  } else if (causa_principal >= "C45" & causa_principal <= "C49") {
+    return("Neoplasias malignas do tecido mesotelial e tecidos moles")
+  } else if (causa_principal >= "C50" & causa_principal <= "C50") {
+    return("Neoplasias malignas da mama")
+  } else if (causa_principal >= "C51" & causa_principal <= "C58") {
+    return("Neoplasias malignas dos órgãos genitais femininos")
+  } else if (causa_principal >= "C60" & causa_principal <= "C63") {
+    return("Neoplasias malignas dos órgãos genitais masculinos")
+  } else if (causa_principal >= "C64" & causa_principal <= "C68") {
+    return("Neoplasias malignas do trato urinário")
+  } else if (causa_principal >= "C69" & causa_principal <= "C72") {
+    return("Neoplasias malignas dos olhos, do encéfalo e de outras partes do sistema nervoso central")
+  } else if (causa_principal >= "C73" & causa_principal <= "C75") {
+    return("Neoplasias malignas da tireóide e de outras glândulas endócrinas")
+  } else if (causa_principal >= "C76" & causa_principal <= "C80") {
+    return("Neoplasias malignas de localizações mal definidas, secundárias e de localizações não especificadas")
+  } else if (causa_principal >= "C81" & causa_principal <= "C96") {
+    return("Neoplasias [tumores] malignas(os), declaradas ou presumidas como primárias, dos tecidos linfático, hematopoético e tecidos correlatos")
+  } else if (causa_principal >= "C97" & causa_principal <= "C97") {
+    return("Neoplasias malignas de localizações múltiplas independentes (primárias)")
+  } else if (causa_principal >= "D00" & causa_principal <= "D09") {
+    return("Neoplasias [tumores] in situ")
+  } else if (causa_principal >= "D10" & causa_principal <= "D36") {
+    return("Neoplasias [tumores] benignas(os)")
+  } else if (causa_principal >= "D37" & causa_principal <= "D48") {
+    return("Neoplasias [tumores] de comportamento incerto ou desconhecido")
+  } else {
+    return("Categoria desconhecida")
+  }
+}
+
+# Aplicar a função de categorização
+df_c00ad48$categoria_c00ad48 <- sapply(df_c00ad48$CAUSABAS, categorizar_cidc00ad48)
+
+
+#Agrupar dados da coluna categoria_causabas
+group_c00ad48 <- df_c00ad48 %>%
+  group_by(categoria_c00ad48) %>%
+  summarize(quantidade = n()) %>%
+  arrange(desc(quantidade))
+
+# Reordenar a variável 
+group_c00ad48$categoria_c00ad48 <- factor(
+  group_c00ad48$categoria_c00ad48, 
+  levels = group_c00ad48$categoria_c00ad48[order(group_c00ad48$quantidade, decreasing = FALSE)]
+)
+
+
+#plotar grafico plotly com as cids no eixo y e a quantidade do eixo x
+gbarra_c00ad48 <- plot_ly(
+  data = group_c00ad48,
+  x = ~quantidade,
+  y = ~categoria_c00ad48,
+  type = 'bar',
+  orientation = 'h'  # 'h' para horizontal
+)
+
+# Ajustar layout
+gbarra_c00ad48 <-gbarra_c00ad48 %>%
+  layout(
+    xaxis = list(title = 'Número de Óbitos'),
+    yaxis = list(title = 'Causa Básica do Óbito')
+  )
+
+# Salvar o gráfico HTML
+pasta <- "graficos_comparacao/gbarra_c00ad48.html"
+saveWidget(gbarra_c00ad48, pasta)
+
+
 
 
 
