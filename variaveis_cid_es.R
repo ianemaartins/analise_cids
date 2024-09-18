@@ -171,7 +171,6 @@ grafico.series.faixaeta.es <- ggplot(df_faixas_etarias_es, aes(x = ANOOBITO, y =
        x = "Ano",
        y = "Quantidade de Pessoas",
        shape = "Faixa Etária") +
-  theme(legend.position = "none") + # Remove a legenda
   scale_x_continuous(breaks = 2013:2022)  # Definir os anos no eixo x
 
 # Salvar o gráfico
@@ -253,7 +252,7 @@ grafico.series.raca.es <- ggplot(df_raca_es, aes(x = ANOOBITO, y = Total, color 
        y = "Número de Mortes",
        color = "Variável CID", 
        shape = "Raça") +
-  scale_x_continuous(breaks = 2013:2022) #+
+  scale_x_continuous(breaks = 2013:2022) +
   guides(
     color = guide_legend(title = "Variável CID", order = 1),
     shape = guide_legend(title = "Raça", order = 2)

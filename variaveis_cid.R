@@ -194,8 +194,7 @@ grafico.series.faixaeta <- ggplot(df_faixas_etarias, aes(x = ANOOBITO, y = Total
   labs(title = "Mortes por Faixa Etária e Variável CID - BR",
        x = "Ano",
        y = "Quantidade de Pessoas",
-       shape = "Faixa Etária") +
-  theme(legend.position = "none") + # Remove a legenda
+       shape = "Faixa Etária") 
   scale_x_continuous(breaks = 2013:2022)  # Definir os anos no eixo x
 
 # Exibir o gráfico

@@ -137,8 +137,7 @@ mortes.por.variavel.interativo <- ggplotly(mortes.por.variavel, tooltip = "text"
     yaxis = list(
       title = list(text = "Mortes", font = list(size = 14)),  # Ajusta o tamanho da fonte do título do eixo Y
       tickfont = list(size = 11)  # Ajusta o tamanho da fonte dos valores no eixo Y
-    ),
-    showlegend = FALSE  # Remove a legenda deste gráfico
+    )
   )
 
 mortes.por.variavel.es.interativo <- ggplotly(mortes.por.variavel.es, tooltip = "text") %>%
@@ -150,8 +149,7 @@ mortes.por.variavel.es.interativo <- ggplotly(mortes.por.variavel.es, tooltip = 
     yaxis = list(
       title = list(text = "Mortes", font = list(size = 14)),  # Ajusta o tamanho da fonte do título do eixo Y
       tickfont = list(size = 11)  # Ajusta o tamanho da fonte dos valores no eixo Y
-    ),
-    showlegend = FALSE  # Remove a legenda deste gráfico
+    )
   )
 
 # Usar subplot para colocar os gráficos lado a lado
@@ -162,7 +160,7 @@ subplot(mortes.por.variavel.interativo, mortes.por.variavel.es.interativo, nrows
       font = list(size = 16)
     ),
     legend = list(
-      title = list(text = "Variável CID", font = list(size = 14)),  # Ajustar o título da legenda
+      title = list(text = "Variável CID", font = list(size = 12)),  # Ajustar o título da legenda
       font = list(size = 10),  # Ajustar o tamanho da fonte da legenda
       orientation = "h",  # Torna a legenda horizontal (opcional)
       x = 0.5,  # Centraliza a legenda horizontalmente
@@ -240,7 +238,7 @@ subplot(idade.por.variavel.interativo, idade.por.variavel.es.interativo, nrows =
     ),
     legend = list(
       title = list(text = "Variável CID", font = list(size = 14)),  # Ajustar o título da legenda
-      font = list(size = 14),  # Ajustar o tamanho da fonte da legenda
+      font = list(size = 12),  # Ajustar o tamanho da fonte da legenda
       orientation = "h",  # Torna a legenda horizontal (opcional)
       x = 0.5,  # Centraliza a legenda horizontalmente
       xanchor = "center",  # Define o ponto de ancoragem
