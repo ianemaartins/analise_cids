@@ -2,18 +2,25 @@
 
 #necesário rodar o código "filtragem.R" antes
 
-#library(plotly)
-#library(htmlwidgets)
+library(plotly)
+library(htmlwidgets)
+library(stringr)
 
 
 #------------- QUAL A CAUSA BÁSICA DE MORTE MAIS COMUM EM MORTES QUE TIVERAM A CONTRIBUIÇÃO DE PSICOATIVOS? --------
+
+#definir UTF-8
+Sys.setlocale("LC_CTYPE", "en_US.UTF-8")
+
 
 # Função para categorizar os códigos CID, considerando apenas os três primeiros caracteres
 categorizar_cid <- function(causa) {
   # Extrair os três primeiros caracteres
   causa_principal <- substr(causa, 1, 3)
   
-  if (causa_principal >= "A00" & causa_principal <= "B99") {
+  if (is.na(causa_principal)) {
+    return(NA)  # Retorna NA se o valor for ausente
+  } else if (causa_principal >= "A00" & causa_principal <= "B99") {
     return("Doenças infecciosas e parasitárias (A00-B99)")
   } else if (causa_principal >= "C00" & causa_principal <= "D48") {
     return("Neoplasias (tumores) (C00-D48)")
@@ -69,6 +76,9 @@ linhaii_causabas <- dados_br_linhaii %>%
   summarize(quantidade = n()) %>%
   arrange(desc(quantidade))
 
+# Adicionar quebras de linha usando str_wrap
+linhaii_causabas$categoria_causabas <- str_wrap(linhaii_causabas$categoria_causabas, width = 50)
+
 # Reordenar a variável 'categoria_causabas' como um fator ordenado
 linhaii_causabas$categoria_causabas <- factor(
   linhaii_causabas$categoria_causabas, 
@@ -88,10 +98,16 @@ gbarra_linhaii_causabas <- plot_ly(
 # Ajustar layout
 gbarra_linhaii_causabas <-gbarra_linhaii_causabas %>%
   layout(
+    title = list(
+      text = 'Causas Básicas de Mortes que tiveram os Psicoativos como Contribuintes - Brasil',  
+      font = list(size = 16)  
+    ),
     xaxis = list(title = 'Número de Óbitos'),
-    yaxis = list(title = 'Causa Básica do Óbito')
+    yaxis = list(
+      title = 'Causa Básica do Óbito',
+      standoff = 40
+    )
   )
-
 
 # Salvar o gráfico HTML
 pasta <- "graficos_comparacao/gbarra_linhaii_causabas.html"
@@ -143,12 +159,14 @@ group_i00ai99 <- df_i00ai99 %>%
   summarize(quantidade = n()) %>%
   arrange(desc(quantidade))
 
+# Adicionar quebras de linha usando str_wrap
+group_i00ai99$categoria_i00ai99 <- str_wrap(group_i00ai99$categoria_i00ai99, width = 50) 
+
 # Reordenar a variável 
 group_i00ai99$categoria_i00ai99 <- factor(
   group_i00ai99$categoria_i00ai99, 
   levels = group_i00ai99$categoria_i00ai99[order(group_i00ai99$quantidade, decreasing = FALSE)]
 )
-
 
 #plotar grafico plotly com as cids no eixo y e a quantidade do eixo x
 gbarra_i00ai99 <- plot_ly(
@@ -162,8 +180,15 @@ gbarra_i00ai99 <- plot_ly(
 # Ajustar layout
 gbarra_i00ai99 <-gbarra_i00ai99 %>%
   layout(
+    title = list(
+      text = 'Mortes por Doenças do Aparelho Circulatório que tiveram os Psicoativos como Contribuintes (BR)',  
+      font = list(size = 16)  
+    ),
     xaxis = list(title = 'Número de Óbitos'),
-    yaxis = list(title = 'Causa Básica do Óbito')
+    yaxis = list(
+      title = 'Causa Básica do Óbito',
+      standoff = 40
+    )
   )
 
 # Salvar o gráfico HTML
@@ -217,12 +242,14 @@ group_j00aj99 <- df_j00aj99 %>%
   summarize(quantidade = n()) %>%
   arrange(desc(quantidade))
 
+# Adicionar quebras de linha usando str_wrap
+group_j00aj99$categoria_j00aj99 <- str_wrap(group_j00aj99$categoria_j00aj99, width = 50) 
+
 # Reordenar a variável 
 group_j00aj99$categoria_j00aj99 <- factor(
   group_j00aj99$categoria_j00aj99, 
   levels = group_j00aj99$categoria_j00aj99[order(group_j00aj99$quantidade, decreasing = FALSE)]
 )
-
 
 #plotar grafico plotly com as cids no eixo y e a quantidade do eixo x
 gbarra_j00aj99 <- plot_ly(
@@ -236,8 +263,15 @@ gbarra_j00aj99 <- plot_ly(
 # Ajustar layout
 gbarra_j00aj99 <-gbarra_j00aj99 %>%
   layout(
+      title = list(
+        text = 'Mortes por Doenças do Aparelho Respiratório que tiveram os Psicoativos como Contribuintes (BR)',  
+        font = list(size = 16)  
+      ),
     xaxis = list(title = 'Número de Óbitos'),
-    yaxis = list(title = 'Causa Básica do Óbito')
+    yaxis = list(
+      title = 'Causa Básica do Óbito',
+      standoff = 40
+    )
   )
 
 # Salvar o gráfico HTML
@@ -307,12 +341,14 @@ group_c00ad48 <- df_c00ad48 %>%
   summarize(quantidade = n()) %>%
   arrange(desc(quantidade))
 
+# Adicionar quebras de linha usando str_wrap
+group_c00ad48$categoria_c00ad48 <- str_wrap(group_c00ad48$categoria_c00ad48, width = 75)
+
 # Reordenar a variável 
 group_c00ad48$categoria_c00ad48 <- factor(
   group_c00ad48$categoria_c00ad48, 
   levels = group_c00ad48$categoria_c00ad48[order(group_c00ad48$quantidade, decreasing = FALSE)]
 )
-
 
 #plotar grafico plotly com as cids no eixo y e a quantidade do eixo x
 gbarra_c00ad48 <- plot_ly(
@@ -326,9 +362,17 @@ gbarra_c00ad48 <- plot_ly(
 # Ajustar layout
 gbarra_c00ad48 <-gbarra_c00ad48 %>%
   layout(
+    title = list(
+      text = 'Neoplasias (tumores) que tiveram os Psicoativos como Contribuintes (BR)',  
+      font = list(size = 16)  
+    ),
     xaxis = list(title = 'Número de Óbitos'),
-    yaxis = list(title = 'Causa Básica do Óbito')
+    yaxis = list(
+      title = 'Causa Básica do Óbito',
+      standoff = 40
+    )
   )
+
 
 # Salvar o gráfico HTML
 pasta <- "graficos_comparacao/gbarra_c00ad48.html"
@@ -383,12 +427,14 @@ group_k00ak93 <- df_k00ak93 %>%
   summarize(quantidade = n()) %>%
   arrange(desc(quantidade))
 
+# Adicionar quebras de linha usando str_wrap
+group_k00ak93$categoria_k00ak93 <- str_wrap(group_k00ak93$categoria_k00ak93, width = 50)
+
 # Reordenar a variável 
 group_k00ak93$categoria_k00ak93 <- factor(
   group_k00ak93$categoria_k00ak93, 
   levels = group_k00ak93$categoria_k00ak93[order(group_k00ak93$quantidade, decreasing = FALSE)]
 )
-
 
 #plotar grafico plotly com as cids no eixo y e a quantidade do eixo x
 gbarra_k00ak93 <- plot_ly(
@@ -402,8 +448,15 @@ gbarra_k00ak93 <- plot_ly(
 # Ajustar layout
 gbarra_k00ak93 <-gbarra_k00ak93 %>%
   layout(
+    title = list(
+      text = 'Mortes por Doenças do Aparelho Digestivo que tiveram os Psicoativos como Contribuintes (BR)',  
+      font = list(size = 16)  
+    ),
     xaxis = list(title = 'Número de Óbitos'),
-    yaxis = list(title = 'Causa Básica do Óbito')
+    yaxis = list(
+      title = 'Causa Básica do Óbito',
+      standoff = 40
+    )
   )
 
 # Salvar o gráfico HTML
@@ -459,12 +512,14 @@ group_f00af99 <- df_f00af99 %>%
   summarize(quantidade = n()) %>%
   arrange(desc(quantidade))
 
+# Adicionar quebras de linha usando str_wrap
+group_f00af99$categoria_f00af99 <- str_wrap(group_f00af99$categoria_f00af99, width = 50)
+
 # Reordenar a variável 
 group_f00af99$categoria_f00af99 <- factor(
   group_f00af99$categoria_f00af99, 
   levels = group_f00af99$categoria_f00af99[order(group_f00af99$quantidade, decreasing = FALSE)]
 )
-
 
 #plotar grafico plotly com as cids no eixo y e a quantidade do eixo x
 gbarra_f00af99 <- plot_ly(
@@ -478,8 +533,15 @@ gbarra_f00af99 <- plot_ly(
 # Ajustar layout
 gbarra_f00af99 <-gbarra_f00af99 %>%
   layout(
+    title = list(
+      text = 'Mortes por Transtornos Mentais e Comportamentais que tiveram os Psicoativos como Contribuintes (BR)',  
+      font = list(size = 16)  
+    ),
     xaxis = list(title = 'Número de Óbitos'),
-    yaxis = list(title = 'Causa Básica do Óbito')
+    yaxis = list(
+      title = 'Causa Básica do Óbito',
+      standoff = 40
+    )
   )
 
 # Salvar o gráfico HTML

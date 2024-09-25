@@ -17,7 +17,7 @@ categorizar_cid <- function(causa) {
     return("Doenças infecciosas e parasitárias (A00-B99)")
   } else if (causa_principal >= "C00" & causa_principal <= "D48") {
     return("Neoplasias (tumores) (C00-D48)")
-  } else if (causa_principal >= "D50" & causa_principal <= "D89") {
+  } else if (causa_principal >= "D75" & causa_principal <= "D89") {
     return("Doenças do sangue e órgãos hematopoéticos (D50-D89)")
   } else if (causa_principal >= "E00" & causa_principal <= "E90") {
     return("Doenças endócrinas, metabólicas e nutricionais  (E00-E90)")
@@ -69,6 +69,9 @@ linhaii_causabas_es <- dados_es_linhaii %>%
   summarize(quantidade = n()) %>%
   arrange(desc(quantidade))
 
+# Adicionar quebras de linha usando str_wrap
+linhaii_causabas_es$categoria_causabas <- str_wrap(linhaii_causabas_es$categoria_causabas, width = 50)
+
 # Reordenar a variável 'categoria_causabas' como um fator ordenado
 linhaii_causabas_es$categoria_causabas <- factor(
   linhaii_causabas_es$categoria_causabas, 
@@ -86,10 +89,17 @@ gbarra_linhaii_causabas_es <- plot_ly(
 )
 
 # Ajustar layout
-gbarra_linhaii_causabas_es <-gbarra_linhaii_causabas_es %>%
+gbarra_linhaii_causabas_es <- gbarra_linhaii_causabas_es %>%
   layout(
+    title = list(
+      text = 'Causas Básicas de Morte que tiveram os Psicoativos como Contribuintes (Espírito Santo)',  
+      font = list(size = 16)  
+    ),
     xaxis = list(title = 'Número de Óbitos'),
-    yaxis = list(title = 'Causa Básica do Óbito')
+    yaxis = list(
+      title = 'Causa Básica do Óbito',
+      standoff = 40
+    )
   )
 
 
@@ -143,6 +153,9 @@ group_i00ai99_es <- df_i00ai99_es %>%
   summarize(quantidade = n()) %>%
   arrange(desc(quantidade))
 
+# Adicionar quebras de linha usando str_wrap
+group_i00ai99_es$categoria_i00ai99 <- str_wrap(group_i00ai99_es$categoria_i00ai99, width = 50)
+
 # Reordenar a variável 
 group_i00ai99_es$categoria_i00ai99 <- factor(
   group_i00ai99_es$categoria_i00ai99, 
@@ -162,8 +175,15 @@ gbarra_i00ai99_es <- plot_ly(
 # Ajustar layout
 gbarra_i00ai99_es <-gbarra_i00ai99_es %>%
   layout(
+    title = list(
+      text = 'Mortes por Doenças do Aparelho Circulatório que tiveram os Psicoativos como Contribuintes (ES)',  
+      font = list(size = 16)  
+    ),
     xaxis = list(title = 'Número de Óbitos'),
-    yaxis = list(title = 'Causa Básica do Óbito')
+    yaxis = list(
+      title = 'Causa Básica do Óbito',
+      standoff = 40
+    )
   )
 
 # Salvar o gráfico HTML
@@ -217,6 +237,9 @@ group_j00aj99_es <- df_j00aj99_es %>%
   summarize(quantidade = n()) %>%
   arrange(desc(quantidade))
 
+# Adicionar quebras de linha usando str_wrap
+group_j00aj99_es$categoria_j00aj99 <- str_wrap(group_j00aj99_es$categoria_j00aj99, width = 50)
+
 # Reordenar a variável 
 group_j00aj99_es$categoria_j00aj99 <- factor(
   group_j00aj99_es$categoria_j00aj99, 
@@ -236,8 +259,15 @@ gbarra_j00aj99_es <- plot_ly(
 # Ajustar layout
 gbarra_j00aj99_es <-gbarra_j00aj99_es %>%
   layout(
+    title = list(
+      text = 'Mortes por Doenças do Aparelho Respiratório que tiveram os Psicoativos como Contribuintes (ES)',  
+      font = list(size = 16)  
+    ),
     xaxis = list(title = 'Número de Óbitos'),
-    yaxis = list(title = 'Causa Básica do Óbito')
+    yaxis = list(
+      title = 'Causa Básica do Óbito',
+      standoff = 40
+    )
   )
 
 # Salvar o gráfico HTML
@@ -307,6 +337,9 @@ group_c00ad48_es <- df_c00ad48_es %>%
   summarize(quantidade = n()) %>%
   arrange(desc(quantidade))
 
+# Adicionar quebras de linha usando str_wrap
+group_c00ad48_es$categoria_c00ad48 <- str_wrap(group_c00ad48_es$categoria_c00ad48, width = 75)
+
 # Reordenar a variável 
 group_c00ad48_es$categoria_c00ad48 <- factor(
   group_c00ad48_es$categoria_c00ad48, 
@@ -326,9 +359,17 @@ gbarra_c00ad48_es <- plot_ly(
 # Ajustar layout
 gbarra_c00ad48_es <-gbarra_c00ad48_es %>%
   layout(
+    title = list(
+      text = 'Mortes por Neoplasias (tumores) que tiveram os Psicoativos como Contribuintes (ES)',  
+      font = list(size = 16)  
+    ),
     xaxis = list(title = 'Número de Óbitos'),
-    yaxis = list(title = 'Causa Básica do Óbito')
+    yaxis = list(
+      title = 'Causa Básica do Óbito',
+      standoff = 40
+    )
   )
+
 
 # Salvar o gráfico HTML
 pasta <- "graficos_comparacao/gbarra_c00ad48_es.html"
@@ -382,6 +423,9 @@ group_k00ak93_es <- df_k00ak93_es %>%
   summarize(quantidade = n()) %>%
   arrange(desc(quantidade))
 
+# Adicionar quebras de linha usando str_wrap
+group_k00ak93_es$categoria_k00ak93 <- str_wrap(group_k00ak93_es$categoria_k00ak93, width = 50)
+
 # Reordenar a variável 
 group_k00ak93_es$categoria_k00ak93 <- factor(
   group_k00ak93_es$categoria_k00ak93, 
@@ -401,8 +445,15 @@ gbarra_k00ak93_es <- plot_ly(
 # Ajustar layout
 gbarra_k00ak93_es <-gbarra_k00ak93_es %>%
   layout(
+    title = list(
+      text = 'Mortes por Doenças do Aparelho Digestivo que tiveram os Psicoativos como Contribuintes (ES)',  
+      font = list(size = 16)  
+    ),
     xaxis = list(title = 'Número de Óbitos'),
-    yaxis = list(title = 'Causa Básica do Óbito')
+    yaxis = list(
+      title = 'Causa Básica do Óbito',
+      standoff = 40
+    )
   )
 
 # Salvar o gráfico HTML
@@ -458,6 +509,9 @@ group_f00af99_es <- df_f00af99_es %>%
   summarize(quantidade = n()) %>%
   arrange(desc(quantidade))
 
+# Adicionar quebras de linha usando str_wrap
+group_f00af99_es$categoria_f00af99 <- str_wrap(group_f00af99_es$categoria_f00af99, width = 50)
+
 # Reordenar a variável 
 group_f00af99_es$categoria_f00af99 <- factor(
   group_f00af99_es$categoria_f00af99, 
@@ -477,10 +531,18 @@ gbarra_f00af99_es <- plot_ly(
 # Ajustar layout
 gbarra_f00af99_es <-gbarra_f00af99_es %>%
   layout(
+    title = list(
+      text = 'Mortes por Transtornos Mentais e Comportamentais que tiveram os Psicoativos como Contribuintes (ES)',  
+      font = list(size = 16)  
+    ),
     xaxis = list(title = 'Número de Óbitos'),
-    yaxis = list(title = 'Causa Básica do Óbito')
+    yaxis = list(
+      title = 'Causa Básica do Óbito',
+      standoff = 40
+    )
   )
 
 # Salvar o gráfico HTML
 pasta <- "graficos_comparacao/gbarra_f00af99_es.html"
 saveWidget(gbarra_f00af99_es, pasta)
+

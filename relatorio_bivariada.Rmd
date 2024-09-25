@@ -1,0 +1,107 @@
+---
+title: "Análise Bivariada das variáveis LINHAII e CAUSABAS"
+author: "Iane Martins"
+date: "2024-09-19"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
+library(dplyr)
+library(DT)
+library(plotly)
+library(ggplot2)
+```
+
+```{r, include=FALSE}
+# Carregar o script que gera os gráficos
+source("filtragem.R")
+source("bivariada_linhaii_causabas.R")
+source("bivariada_linhaii_causabas_es.R")
+```
+
+<br>
+
+## Brasil
+
+<br>
+
+```{r, echo=FALSE, fig.show='hold', out.width="100%", message=FALSE, warning=FALSE}
+gbarra_linhaii_causabas
+```
+
+<br>
+
+```{r, echo=FALSE, fig.show='hold', out.width="100%", message=FALSE, warning=FALSE}
+gbarra_i00ai99
+```
+
+<br>
+
+```{r, echo=FALSE, fig.show='hold', out.width="100%", message=FALSE, warning=FALSE}
+gbarra_j00aj99
+```
+
+<br>
+
+```{r, echo=FALSE, fig.show='hold', out.width="100%", message=FALSE, warning=FALSE}
+gbarra_c00ad48
+```
+
+<br>
+
+```{r, echo=FALSE, fig.show='hold', out.width="100%", message=FALSE, warning=FALSE}
+gbarra_k00ak93
+```
+
+<br>
+
+```{r, echo=FALSE, fig.show='hold', out.width="100%", message=FALSE, warning=FALSE}
+gbarra_f00af99
+```
+
+<br>
+
+## Espírito Santo
+
+<br>
+
+```{r, echo=FALSE, fig.show='hold', out.width="100%", message=FALSE, warning=FALSE}
+gbarra_linhaii_causabas_es
+```
+
+<br>
+
+```{r, echo=FALSE, fig.show='hold', out.width="100%", message=FALSE, warning=FALSE}
+gbarra_i00ai99_es
+```
+
+<br>
+
+```{r, echo=FALSE, fig.show='hold', out.width="100%", message=FALSE, warning=FALSE}
+gbarra_j00aj99_es
+```
+
+<br>
+
+```{r, echo=FALSE, fig.show='hold', out.width="100%", message=FALSE, warning=FALSE}
+gbarra_c00ad48_es
+```
+
+<br>
+
+```{r, echo=FALSE, fig.show='hold', out.width="100%", message=FALSE, warning=FALSE}
+gbarra_k00ak93_es
+```
+
+<br>
+
+```{r, echo=FALSE, fig.show='hold', out.width="100%", message=FALSE, warning=FALSE}
+gbarra_f00af99_es
+```
+
+<br>
+

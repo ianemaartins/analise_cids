@@ -183,12 +183,11 @@ for (i in seq_along(lista_dfs)) {
 
 # Criar o gráfico de séries
 grafico.series.faixaeta <- ggplot(df_faixas_etarias, aes(x = ANOOBITO, y = Total, color = Variavel, shape = Faixa_Etaria,
-                                                         group = interaction(Variavel, Faixa_Etaria),  # Garante que as linhas sejam conectadas corretamente
                                                          text = paste("Ano do Óbito:", ANOOBITO, "<br>",
                                                                       "N. de Mortes:", Total, "<br>", 
                                                                       "Variável CID:", Variavel, "<br>", 
                                                                       "Faixa Etária:", Faixa_Etaria))) +
-  geom_line(aes(linetype = Variavel), size = 0.5) +
+  geom_line(aes(group = interaction(Variavel, Faixa_Etaria)), size = 0.5) +
   geom_point(size = 1.5) +
   scale_shape_manual(values = c("[30-60)" = 16, "[60-infinito)" = 15)) +  # Bolinha para [30-60), quadrado para [60-infinito)
   labs(title = "Mortes por Faixa Etária e Variável CID - BR",
@@ -228,10 +227,9 @@ for (i in seq_along(lista_dfs)) {
 
 # Criar o gráfico
 grafico.series.genero <- ggplot(df_genero, aes(x = ANOOBITO, y = Total, color = Variavel, shape = SEXO,
-                                               group = interaction(Variavel, SEXO), 
                                                text = paste("Ano do Óbito:", ANOOBITO, "<br>",
                                                             "N. de Mortes:", Total, "<br>", "Variável CID:", Variavel, "<br>", "Sexo:", SEXO ))) +
-  geom_line(aes(linetype = Variavel), size = 0.5) +
+  geom_line(aes(group = interaction(Variavel, SEXO)), size = 0.5) +
   geom_point(size = 1.5) +
   scale_shape_manual(values = c("Masculino" = 16, "Feminino" = 17)) +  # Bolinha para masculino, triângulo para feminino
   labs(title = "Mortes por Sexo e Variável CID - BR",

@@ -578,7 +578,7 @@ datatable(
 
 <br>
 
-## 6. Próximos Passos
+## 7. Próximos Passos
 
 <br>
 
