@@ -21,6 +21,8 @@ library(ggplot2)
 source("filtragem.R")
 source("variaveis_cid.R")
 source("variaveis_cid_es.R")
+source("bivariada_linhaii_causabas.R")
+source("bivariada_linhaii_causabas_es.R")
 ```
 
 ```{r, echo=FALSE, message=FALSE, warning=FALSE}
@@ -575,10 +577,95 @@ datatable(
 )
 ```
 
+<br>
+
+## 7. Análise Bivariada - Variáveis LINHAII e CAUSABAS
+
+### 7.1. Brasil
 
 <br>
 
-## 7. Próximos Passos
+```{r, echo=FALSE, fig.show='hold', out.width="100%", message=FALSE, warning=FALSE}
+gbarra_linhaii_causabas
+```
+
+<br>
+
+```{r, echo=FALSE, fig.show='hold', out.width="100%", message=FALSE, warning=FALSE}
+gbarra_i00ai99
+```
+
+<br>
+
+```{r, echo=FALSE, fig.show='hold', out.width="100%", message=FALSE, warning=FALSE}
+gbarra_j00aj99
+```
+
+<br>
+
+```{r, echo=FALSE, fig.show='hold', out.width="100%", message=FALSE, warning=FALSE}
+gbarra_c00ad48
+```
+
+<br>
+
+```{r, echo=FALSE, fig.show='hold', out.width="100%", message=FALSE, warning=FALSE}
+gbarra_k00ak93
+```
+
+<br>
+
+```{r, echo=FALSE, fig.show='hold', out.width="100%", message=FALSE, warning=FALSE}
+gbarra_f00af99
+```
+
+<br>
+
+### 7.2. Espírito Santo
+
+<br>
+
+```{r, echo=FALSE, fig.show='hold', out.width="100%", message=FALSE, warning=FALSE}
+gbarra_linhaii_causabas_es
+```
+
+<br>
+
+```{r, echo=FALSE, fig.show='hold', out.width="100%", message=FALSE, warning=FALSE}
+gbarra_i00ai99_es
+```
+
+<br>
+
+```{r, echo=FALSE, fig.show='hold', out.width="100%", message=FALSE, warning=FALSE}
+gbarra_j00aj99_es
+```
+
+<br>
+
+```{r, echo=FALSE, fig.show='hold', out.width="100%", message=FALSE, warning=FALSE}
+gbarra_c00ad48_es
+```
+
+<br>
+
+```{r, echo=FALSE, fig.show='hold', out.width="100%", message=FALSE, warning=FALSE}
+gbarra_k00ak93_es
+```
+
+<br>
+
+```{r, echo=FALSE, fig.show='hold', out.width="100%", message=FALSE, warning=FALSE}
+gbarra_f00af99_es
+```
+
+<br>
+
+
+
+<br>
+
+## 8. Próximos Passos
 
 <br>
 

@@ -70,7 +70,7 @@ linhaii_causabas_es <- dados_es_linhaii %>%
   arrange(desc(quantidade))
 
 # Adicionar quebras de linha usando str_wrap
-linhaii_causabas_es$categoria_causabas <- str_wrap(linhaii_causabas_es$categoria_causabas, width = 50)
+linhaii_causabas_es$categoria_causabas <- str_wrap(linhaii_causabas_es$categoria_causabas, width = 75)
 
 # Reordenar a variável 'categoria_causabas' como um fator ordenado
 linhaii_causabas_es$categoria_causabas <- factor(
@@ -85,7 +85,8 @@ gbarra_linhaii_causabas_es <- plot_ly(
   x = ~quantidade,
   y = ~categoria_causabas,
   type = 'bar',
-  orientation = 'h'  # 'h' para horizontal
+  orientation = 'h',  # 'h' para horizontal
+  marker = list(color = '#be3100')
 )
 
 # Ajustar layout
@@ -154,7 +155,7 @@ group_i00ai99_es <- df_i00ai99_es %>%
   arrange(desc(quantidade))
 
 # Adicionar quebras de linha usando str_wrap
-group_i00ai99_es$categoria_i00ai99 <- str_wrap(group_i00ai99_es$categoria_i00ai99, width = 50)
+group_i00ai99_es$categoria_i00ai99 <- str_wrap(group_i00ai99_es$categoria_i00ai99, width = 75)
 
 # Reordenar a variável 
 group_i00ai99_es$categoria_i00ai99 <- factor(
@@ -338,7 +339,7 @@ group_c00ad48_es <- df_c00ad48_es %>%
   arrange(desc(quantidade))
 
 # Adicionar quebras de linha usando str_wrap
-group_c00ad48_es$categoria_c00ad48 <- str_wrap(group_c00ad48_es$categoria_c00ad48, width = 75)
+group_c00ad48_es$categoria_c00ad48 <- str_wrap(group_c00ad48_es$categoria_c00ad48, width = 80)
 
 # Reordenar a variável 
 group_c00ad48_es$categoria_c00ad48 <- factor(
