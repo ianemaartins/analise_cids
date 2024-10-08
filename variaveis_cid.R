@@ -64,9 +64,15 @@ obs.por.variavel <- ggplot(obs_variavel, aes(x = Nome, y = Observacoes, fill = N
        y = "Número de Observações")+
   theme(legend.position = "none")  # Remove a legenda
 
-ggsave(filename = "graficos_comparacao/obs_por_variavel.png", 
-       plot = obs.por.variavel, 
-       width = 10, height = 6, dpi = 150)
+# Converta o gráfico para um objeto plotly
+obs.por.variavel_plotly <- ggplotly(obs.por.variavel, tooltip = "text")
+
+# Exiba o gráfico interativo
+obs.por.variavel_plotly
+
+# Opcional: Salve como HTML interativo
+htmlwidgets::saveWidget(obs.por.variavel_plotly, "graficos_comparacao/obs_por_variavel.html")
+
 
 
 # -------- COMPARACAO ENTRE O NUMERO TOTAL DE MORTES POR ANO EM CADA VARIAVEL----------------
@@ -104,11 +110,14 @@ mortes.por.variavel <- ggplot(df_comparacoes, aes(x = ANOOBITO, y = Total_Mortes
   scale_x_continuous(breaks = 2013:2022)  # Definir os anos no eixo x
 
 
-#salvar grafico
-ggsave(filename = "graficos_comparacao/mortes_por_variavel.png", 
-       plot = mortes.por.variavel, 
-       width = 10, height =12, dpi = 150)
+# Converta o gráfico para um objeto plotly
+mortes.por.variavel_plotly <- ggplotly(mortes.por.variavel, tooltip = "text")
 
+# Exiba o gráfico interativo
+mortes.por.variavel_plotly
+
+# Opcional: Salve como HTML interativo
+htmlwidgets::saveWidget(mortes.por.variavel_plotly, "graficos_comparacao/mortes.por.variavel.html")
 
 # ----------------- IDADE E FAIXA ETARIA-------------------------------
 
@@ -127,11 +136,14 @@ idade.por.variavel <- ggplot(df_comparacoes, aes(x = ANOOBITO, y = Media_Idade, 
                                   ceiling(max(df_comparacoes$Media_Idade)), 
                                   by = 2))
 
-# Salvar gráfico
-ggsave(filename = "graficos_comparacao/idade_por_variavel.png", 
-       plot = idade.por.variavel, 
-       width = 10, height = 6, dpi = 150)
+# Converta o gráfico para um objeto plotly
+idade.por.variavel_plotly <- ggplotly(idade.por.variavel, tooltip = "text")
 
+# Exiba o gráfico interativo
+idade.por.variavel_plotly
+
+# Opcional: Salve como HTML interativo
+htmlwidgets::saveWidget(idade.por.variavel_plotly, "graficos_comparacao/idade.por.variavel.html")
 
 
 #BOXPLOT IDADES
@@ -153,10 +165,14 @@ boxplot.idades <- ggplot(df_idades, aes(x = Variavel, y = IDADE2, color = Variav
        x = "Variável",
        y = "Idade")
 
-# Salvar o gráfico
-ggsave(filename = "graficos_comparacao/boxplot_idades_por_variavel.png", 
-       plot = boxplot.idades, 
-       width = 10, height = 6, dpi = 150)
+# Converta o gráfico para um objeto plotly
+boxplot.idades_plotly <- ggplotly(boxplot.idades, tooltip = "text")
+
+# Exiba o gráfico interativo
+boxplot.idades_plotly
+
+# Opcional: Salve como HTML interativo
+htmlwidgets::saveWidget(boxplot.idades_plotly, "graficos_comparacao/boxplot.idades.html")
 
 
 #SERIES POR FAIXA ETÁRIA
@@ -196,13 +212,15 @@ grafico.series.faixaeta <- ggplot(df_faixas_etarias, aes(x = ANOOBITO, y = Total
        shape = "Faixa Etária") 
   scale_x_continuous(breaks = 2013:2022)  # Definir os anos no eixo x
 
-# Exibir o gráfico
-print(grafico.series.faixaeta)
 
-# Salvar o gráfico
-ggsave(filename = "graficos_comparacao/grafico_series_faixaeta.png", 
-       plot = grafico.series.faixaeta, 
-       width = 10, height = 12, dpi = 150)
+# Converta o gráfico para um objeto plotly
+grafico.series.faixaeta_plotly <- ggplotly(grafico.series.faixaeta, tooltip = "text")
+
+# Exiba o gráfico interativo
+grafico.series.faixaeta_plotly
+
+# Opcional: Salve como HTML interativo
+htmlwidgets::saveWidget(grafico.series.faixaeta_plotly, "graficos_comparacao/grafico.series.faixaeta.html")
 
 
 
@@ -229,7 +247,7 @@ for (i in seq_along(lista_dfs)) {
 grafico.series.genero <- ggplot(df_genero, aes(x = ANOOBITO, y = Total, color = Variavel, shape = SEXO,
                                                text = paste("Ano do Óbito:", ANOOBITO, "<br>",
                                                             "N. de Mortes:", Total, "<br>", "Variável CID:", Variavel, "<br>", "Sexo:", SEXO ))) +
-  geom_line(aes(group = interaction(Variavel, SEXO)), size = 0.5) +
+  geom_line(aes(group = interaction(Variavel, SEXO)), size = 0.5, show.legend = FALSE) +
   geom_point(size = 1.5) +
   scale_shape_manual(values = c("Masculino" = 16, "Feminino" = 17)) +  # Bolinha para masculino, triângulo para feminino
   labs(title = "Mortes por Sexo e Variável CID - BR",
@@ -238,13 +256,14 @@ grafico.series.genero <- ggplot(df_genero, aes(x = ANOOBITO, y = Total, color = 
        shape = "Sexo") +
   scale_x_continuous(breaks = 2013:2022)
 
-# Exibir o gráfico
-print(grafico.series.genero)
+# Converta o gráfico para um objeto plotly
+grafico.series.genero_plotly <- ggplotly(grafico.series.genero, tooltip = "text")
 
-# Salvar o gráfico
-ggsave(filename = "graficos_comparacao/grafico_series_genero.png", 
-       plot = grafico.series.genero, 
-       width = 10, height = 12, dpi = 150)
+# Exiba o gráfico interativo
+grafico.series.genero_plotly
+
+# Opcional: Salve como HTML interativo
+htmlwidgets::saveWidget(grafico.series.genero_plotly, "graficos_comparacao/grafico.series.genero.html")
 
 
 #----------------------- RACA ---------------------------------
@@ -290,10 +309,14 @@ grafico.series.raca <- ggplot(df_raca, aes(x = ANOOBITO, y = Total, color = Vari
     shape = guide_legend(title = "Raça", order = 2)  # Legenda para os formatos
   ) 
 
-# Salvar o gráfico
-ggsave(filename = "graficos_comparacao/grafico_series_raca.png", 
-       plot = grafico.series.raca,
-       width = 10, height = 12, dpi = 150)
+# Converta o gráfico para um objeto plotly
+grafico.series.raca_plotly <- ggplotly(grafico.series.raca, tooltip = "text")
+
+# Exiba o gráfico interativo
+grafico.series.raca_plotly
+
+# Opcional: Salve como HTML interativo
+htmlwidgets::saveWidget(grafico.series.raca_plotly, "graficos_comparacao/grafico.series.raca.html")
 
 
 
